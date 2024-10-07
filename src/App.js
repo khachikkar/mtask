@@ -7,8 +7,13 @@ const App = () => {
     return (
         <div id="divContainer">
           <Header />
-          <Register />
-          <Login />
+          
+<div className='logpass'>
+<Register />
+<Login />
+</div>
+
+
         </div>
     )
 };
