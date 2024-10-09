@@ -7,29 +7,32 @@
     display: flex;
     background-color: aliceblue;
     flex-direction: column;
+    /* height: 100vh; */
+
 }
 
 .logpass{
     display: flex;
     flex-direction: row;
-    gap: 100px;
-    padding: 20px;
     justify-content: space-around;
     /* height: 100%; */
-    margin: 100px;
+    /* border: 1px solid red; */
+    flex-wrap: wrap;
+    margin: auto;
+    gap: 20px;
 }
 
 
 
 .logincont{
-   width: 400px;
+ width: 350px;
     border: 1px solid black;
     border-radius: 20px;
     padding: 10px;
 }
 
 .registr{
-    width: 400px;
+    width: 350px;
     border: 1px solid black;
     border-radius: 20px;
     padding: 10px;

@@ -154,7 +154,7 @@ const Register = () => {
           <Input.Password type="text" placeholder="enter your password" />
         </Form.Item>
 
-        <Button type="primary" htmlType="submit" loading={loading}>
+        <Button style={{ width: "100%" }} type="primary" htmlType="submit" loading={loading}>
           Register
         </Button>
       </Form>

@@ -69,7 +69,7 @@ console.log(resp, ">>>>>")
         </Form.Item>
 
 
-        <Button type="primary" htmlType="submit" loading={loading}> Login </Button>
+        <Button  style={{ width: "100%" }} type="primary" htmlType="submit" loading={loading}> Login </Button>
           
       </Form>
     </div>
