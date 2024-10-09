@@ -3,13 +3,13 @@
 }
 
 
-#divContainer{
+/* #divContainer{
     display: flex;
     background-color: aliceblue;
     flex-direction: column;
     /* height: 100vh; */
 
-}
+
 
 .logpass{
     display: flex;
@@ -33,7 +33,36 @@
 
 .registr{
     width: 350px;
+    height: auto;
     border: 1px solid black;
     border-radius: 20px;
     padding: 10px;
+}
+
+.main{
+    /* background-color: red; */
+    margin: 100px 0;
+
+}
+
+.loginImg{
+  
+    width: 372px;
+    border-radius: 10px;
+    height: 325.42px;
+    background-image: url("/src//core/images/img1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.regImg{
+  
+    width: 372px;
+    border-radius: 10px;
+    height: 497.42px;
+    background-image: url("/src//core/images/img2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

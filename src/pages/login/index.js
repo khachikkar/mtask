@@ -6,53 +6,50 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../../services/firbase";
 
+import { Link } from "react-router-dom";
+
+import { ROUTE_CONSTANTS } from "../../core/constants/constants";
+
+import { Flex } from "antd";
 
 const Login = () => {
   const [form] = Form.useForm();
 
+  const [loading, setLoading] = useState(false);
 
-const [loading, setLoading] = useState(false)
-
-
-
-  const handleLogin = async values => {
-   
-    setLoading(true)
-    try{
-  const {email ,password} = values
-const resp = await signInWithEmailAndPassword(auth, email, password)
-form.resetFields()
-console.log(resp, ">>>>>")
-
-    }catch(error){
-      console.log(error)
-    }finally{
-      setLoading(false)
+  const handleLogin = async (values) => {
+    setLoading(true);
+    try {
+      const { email, password } = values;
+      await signInWithEmailAndPassword(auth, email, password);
+      form.resetFields();
+      
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-
-
-
   };
 
   return (
-    <div className="logincont">
+   <Flex gap="small" wrap justify="center" >
+    
+     <div className="logincont">
       <h2>Log In</h2>
       <Form layout="vertical" form={form} onFinish={handleLogin}>
         <Form.Item
           label="Email"
           name="email"
-           tooltip="This field is for your Email"
+          tooltip="This field is for your Email"
           rules={[
             {
               required: true,
               message: "Pls enter your Eamil",
             },
-
           ]}
         >
-        <Input type="email" placeholder="email" />
+          <Input type="email" placeholder="email" />
         </Form.Item>
-
 
         <Form.Item
           label="Password"
@@ -62,17 +59,38 @@ console.log(resp, ">>>>>")
             {
               required: true,
               message: "Pls enter your Password",
-            }
+            },
           ]}
         >
-        <Input.Password placeholder="Password" />
+          <Input.Password placeholder="Password" />
         </Form.Item>
 
+        <Button
+          style={{ width: "100%" }}
+          type="primary"
+          htmlType="submit"
+          loading={loading}
+        >
+          Login
+        </Button>
+          <br></br>
+          <Link to={ROUTE_CONSTANTS.REGISTER}>
+          <Button
+          style={{ width: "100%" }}
+          type="Link"
+        >
+          Create Acount
+        </Button>
+          </Link>
 
-        <Button  style={{ width: "100%" }} type="primary" htmlType="submit" loading={loading}> Login </Button>
-          
+        
       </Form>
     </div>
+
+    <div className="loginImg">
+      
+    </div>
+   </Flex>
   );
 };
 

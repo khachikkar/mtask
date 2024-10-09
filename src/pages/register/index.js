@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-import { Form, Button, Input, notification } from "antd";
+import { Form, Button, Input, notification, Flex } from "antd";
 import { auth } from "../../services/firbase";
 
 import { passWalidation } from "../../core/constants/constants";
 
 
+
 import "./index.css";
+import { Link, useNavigate } from "react-router-dom";
+
+import { ROUTE_CONSTANTS } from "../../core/constants/constants";
 // class Register extends React.Component {
 //   constructor () {
 //     super();
@@ -79,11 +83,15 @@ const Register = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
+const navigate = useNavigate()
+
+
   const handleRegister = async (values) => {
     setLoading(true);
     const { email, password } = values;
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      navigate(ROUTE_CONSTANTS.LOGIN)
     } catch (e) {
       console.log(e);
     } finally {
@@ -92,6 +100,7 @@ const Register = () => {
   };
 
   return (
+    <Flex gap="small" wrap justify="center">
     <div className="registr">
         <h2>Register</h2>
       <Form layout="vertical" form={form} onFinish={handleRegister}>
@@ -157,8 +166,18 @@ const Register = () => {
         <Button style={{ width: "100%" }} type="primary" htmlType="submit" loading={loading}>
           Register
         </Button>
+        
+        <Link to={ROUTE_CONSTANTS.LOGIN}>
+        
+        <Button style={{ width: "100%" }} type="Link">
+          Log In
+        </Button>
+        
+        </Link>
       </Form>
     </div>
+    <div className="regImg"></div>
+    </Flex>
   );
 };
 

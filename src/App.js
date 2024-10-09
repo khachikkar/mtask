@@ -1,32 +1,37 @@
-import Header from './components/global/Header';
-import Login from './pages/login';
-import Register from './pages/register';
-import './styles/global.css';
+import Header from "./components/global/Header";
+import MainLayout from "./components/Layout/Main";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
-import { Flex } from 'antd';
+import 'antd/dist/reset.css'; 
+
+import "./styles/global.css";
+
+import { Flex } from "antd";
+
+import { ROUTE_CONSTANTS } from "./core/constants/constants";
+
+
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router-dom";
 
 const App = () => {
-    return (
-        <div id="divContainer">
-          <Header />
-
-<Flex wrap  direction="column" align="flex-start" gap="middle" justify="center" >
-
-<Register />
-<Login />
-
-</Flex>
-
-
-<div className='logpass'>
-
-</div>
-
-
-        </div>
-    )
+  return (
+    <RouterProvider
+      router={createBrowserRouter(
+        createRoutesFromElements(
+          <Route path="/" element={<MainLayout />}>
+            <Route path={ROUTE_CONSTANTS.LOGIN} element={<Login />} />
+            <Route path={ROUTE_CONSTANTS.REGISTER} element={<Register />} />
+          </Route>
+        )
+      )}
+    />
+  );
 };
 
 export default App;
-
-

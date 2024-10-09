@@ -1,5 +1,7 @@
 import { Flex, Button } from "antd";
 import "./index.css";
+import { Link } from "react-router-dom";
+import { ROUTE_CONSTANTS } from "../../../core/constants/constants";
 
 const Header = () => {
   return (
@@ -8,7 +10,9 @@ const Header = () => {
         <p>Logo</p>
 
         <div>
+          <Link to={ROUTE_CONSTANTS.LOGIN}>
           <Button>Sign in</Button>
+          </Link>
         </div>
       </Flex>
     </div>
