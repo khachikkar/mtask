@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-import { Form, Button, Input, notification, Flex } from "antd";
+import { Form, Button, Input,  Flex } from "antd";
 import { auth } from "../../services/firbase";
 
 import { passWalidation } from "../../core/constants/constants";
