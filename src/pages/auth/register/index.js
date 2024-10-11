@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { Form, Button, Input, Flex } from "antd";
 import { auth } from "../../../services/firbase";
 
-import { passWalidation,  ROUTE_CONSTANTS } from "../../../core/constants/constants";
+import {
+  passWalidation,
+  ROUTE_CONSTANTS,
+} from "../../../core/constants/constants";
 
 import Wraper from "../../../components/shared/AuthWraper";
-import RegisterBanner from "../../../core/images/register.jpg"
-
+import RegisterBanner from "../../../core/images/register.jpg";
 
 
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa";
 
 // class Register extends React.Component {
 //   constructor () {
@@ -86,15 +89,29 @@ const Register = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
+  const handleWithGoogle = async (e) => {
+    e.preventDefault();
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // Successful Google Sign-In
+      console.log("Google sign-in successful:", result.user);
+
+      // Navigate to the profile page after successful sign-in
+      navigate(ROUTE_CONSTANTS.LOGIN);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleRegister = async (values) => {
     setLoading(true);
     const { email, password } = values;
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate(ROUTE_CONSTANTS.LOGIN)
+      navigate(ROUTE_CONSTANTS.LOGIN);
     } catch (e) {
       console.log(e);
     } finally {
@@ -103,7 +120,6 @@ const navigate = useNavigate()
   };
 
   return (
-   
     <Wraper title="Register" banner={RegisterBanner}>
       <Form layout="vertical" form={form} onFinish={handleRegister}>
         <Form.Item
@@ -119,98 +135,109 @@ const navigate = useNavigate()
           <Input type="text" placeholder="enter your name" />
         </Form.Item>
 
-        <Form.Item 
-        label="Last Name"
-        name="lastname" 
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Last name!',
-          }
-         ]}
-        
+        <Form.Item
+          label="Last Name"
+          name="lastname"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Last name!",
+            },
+          ]}
         >
           <Input type="text" placeholder="enter your surname" />
         </Form.Item>
 
-        <Form.Item 
-        label="Eamil" 
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Last email!',
-          }
-         ]}
+        <Form.Item
+          label="Eamil"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Last email!",
+            },
+          ]}
         >
           <Input type="text" placeholder="enter your name" />
         </Form.Item>
 
-        <Form.Item 
-        label="Password" 
-        name="password"
-        tooltip="Password must be 6-16 characters, including at least one number and one..."
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Password!',
-          
-          }, 
-          {
-            pattern:passWalidation,
-            message: "Password must be 6-16 characters, including at least one number and one..."
-          }
-         ]}
+        <Form.Item
+          label="Password"
+          name="password"
+          tooltip="Password must be 6-16 characters, including at least one number and one..."
+          rules={[
+            {
+              required: true,
+              message: "Please input your Password!",
+            },
+            {
+              pattern: passWalidation,
+              message:
+                "Password must be 6-16 characters, including at least one number and one...",
+            },
+          ]}
         >
           <Input.Password type="text" placeholder="Enter your password" />
         </Form.Item>
 
+        <Form.Item
+          label="Confirm Password"
+          name="confirm"
+          tooltip="Password must be 6-16 characters, including at least one number and one..."
+          dependencies={["password"]} // sa nayum e password i popoxutyany talis enq label i name vor nayi dran
+          rules={
+            [
+              {
+                required: true,
+                message: "Please input your Password!",
+              },
 
-<Form.Item
-label="Confirm Password"
-name="confirm"
- tooltip="Password must be 6-16 characters, including at least one number and one..."
-dependencies={["password"]} // sa nayum e password i popoxutyany talis enq label i name vor nayi dran
-rules={[
-  {
-    required: true,
-    message: 'Please input your Password!',
-  
-  }, 
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
 
-  ({getFieldValue})=>({
-validator(_, value){
-  if( !value || getFieldValue("password") === value){
-    return Promise.resolve()
-  }
+                  return Promise.reject(
+                    new Error("The Password doesn't match")
+                  );
+                },
+              }),
+            ]
+            // ays funkcian ant i funkcia e vory confirm e anum pass0y getfieldvalue- confirmi miji gracn e , value dependencieic ekac value
+          }
+        >
+          <Input.Password type="text" placeholder="Confirm Password" />
+        </Form.Item>
 
-  return Promise.reject(new Error("The Password doesn't match"))
-}
-  })
- ]
-// ays funkcian ant i funkcia e vory confirm e anum pass0y getfieldvalue- confirmi miji gracn e , value dependencieic ekac value
- }
->
-<Input.Password type="text" placeholder="Confirm Password" />
+        <Flex wrap justify="center" align="center" gap="10px">
+          <Button
+            style={{ width: "100%" }}
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+          >
+            Register
+          </Button>
 
-</Form.Item>
+          <Button
+            onClick={handleWithGoogle}
+            style={{ width: "100%" }}
+            type="default"
+          >
+           <FaGoogle></FaGoogle> Register with Google
+          </Button>
 
-<Flex wrap justify="center" align="center">
-<Button style={{ width: "100%" }} type="primary" htmlType="submit" loading={loading}>
-          Register
-        </Button>
-        
-        <Link to={ROUTE_CONSTANTS.LOGIN}>
-        
-        <Button style={{ width: "100%" }} type="Link">
-          Log In
-        </Button>
-        
-        </Link>
-</Flex>
-        
 
-</Form>
+          <Link to={ROUTE_CONSTANTS.LOGIN}>
+            <Button style={{ width: "100%" }} type="Link">
+              Log In
+            </Button>
+          </Link>
+
+         
+        </Flex>
+      </Form>
     </Wraper>
   );
 };

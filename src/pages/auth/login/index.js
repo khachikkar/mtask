@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Form, Input, Button, Flex } from "antd";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { auth } from "../../../services/firbase";
 
@@ -14,11 +14,31 @@ import LoginBanner from "../../../core/images/login.jpg"
 
 import Wraper from "../../../components/shared/AuthWraper";
 
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
   const [form] = Form.useForm();
 
   const [loading, setLoading] = useState(false);
+
+
+  const handleWithGoogle = async (e) => {
+    e.preventDefault();
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // Successful Google Sign-In
+      console.log("Google sign-in successful:", result.user);
+
+/////
+// after successfulity the user must be go in their profile
+/////
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+
 
   const handleLogin = async (values) => {
     setLoading(true);
@@ -67,7 +87,7 @@ const Login = () => {
           <Input.Password placeholder="Password" />
         </Form.Item>
 
-<Flex wrap justify="center" align="center">
+<Flex wrap justify="center" align="center" gap="10px">
 <Button
           style={{ width: "100%" }}
           type="primary"
@@ -77,6 +97,15 @@ const Login = () => {
           Login
         </Button>
    
+        <Button
+            onClick={handleWithGoogle}
+            style={{ width: "100%" }}
+            type="default"
+          >
+           <FaGoogle></FaGoogle> Log In with Google
+          </Button>
+
+
           <Link to={ROUTE_CONSTANTS.REGISTER}>
           <Button
           style={{ width: "100%" }}
