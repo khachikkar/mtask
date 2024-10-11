@@ -23,7 +23,7 @@
 }
 
 
-
+/* 
 .logincont{
  width: 350px;
     border: 1px solid black;
@@ -37,7 +37,7 @@
     border: 1px solid black;
     border-radius: 20px;
     padding: 10px;
-}
+} */
 
 .main{
     /* background-color: red; */
@@ -45,7 +45,7 @@
 
 }
 
-.loginImg{
+/* .loginImg{
   
     width: 350px;
     border-radius: 10px;
@@ -65,4 +65,4 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
+} */

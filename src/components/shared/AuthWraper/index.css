@@ -1,0 +1,32 @@
+
+
+.authWraper{
+    width: 800px;
+    display: grid;
+    grid-template-columns:repeat(2, 1fr);
+    margin: 18px auto;
+}
+
+.bannerCont{
+
+    border-radius: 12px 0 0 12px;
+    background-position: center;
+    background-size: cover;
+    /* img{
+        width: 100%;
+        height: 100%;
+    } */
+}
+
+.formCont{
+    border: 1px solid rgba(0, 0, 0, 0.207);
+    padding: 12px;
+    border-radius: 0 12px 12px 0;
+
+}
+
+@media screen and (max-width: 400px) {
+    .authWraper{
+        
+    }    
+}

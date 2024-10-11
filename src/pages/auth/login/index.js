@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Flex } from "antd";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { auth } from "../../services/firbase";
+import { auth } from "../../../services/firbase";
 
 import { Link } from "react-router-dom";
 
-import { ROUTE_CONSTANTS } from "../../core/constants/constants";
+import { ROUTE_CONSTANTS } from "../../../core/constants/constants";
 
-import { Flex } from "antd";
+import LoginBanner from "../../../core/images/login.jpg"
+
+import Wraper from "../../../components/shared/AuthWraper";
+
 
 const Login = () => {
   const [form] = Form.useForm();
@@ -32,10 +35,9 @@ const Login = () => {
   };
 
   return (
-   <Flex gap="small" wrap justify="center" >
+
     
-     <div className="logincont">
-      <h2>Log In</h2>
+     <Wraper title="Sign In" banner={LoginBanner}>
       <Form layout="vertical" form={form} onFinish={handleLogin}>
         <Form.Item
           label="Email"
@@ -54,7 +56,7 @@ const Login = () => {
         <Form.Item
           label="Password"
           name="password"
-          tooltip="Password must be 6-16 characters, including at least one number and one..."
+         
           rules={[
             {
               required: true,
@@ -65,7 +67,8 @@ const Login = () => {
           <Input.Password placeholder="Password" />
         </Form.Item>
 
-        <Button
+<Flex wrap justify="center" align="center">
+<Button
           style={{ width: "100%" }}
           type="primary"
           htmlType="submit"
@@ -73,7 +76,7 @@ const Login = () => {
         >
           Login
         </Button>
-          <br></br>
+   
           <Link to={ROUTE_CONSTANTS.REGISTER}>
           <Button
           style={{ width: "100%" }}
@@ -82,15 +85,15 @@ const Login = () => {
           Create Acount
         </Button>
           </Link>
+</Flex>
+
+        
 
         
       </Form>
-    </div>
+    </Wraper>
 
-    <div className="loginImg">
-      
-    </div>
-   </Flex>
+   
   );
 };
 

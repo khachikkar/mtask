@@ -1,17 +1,20 @@
 import React, { useState } from "react";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-import { Form, Button, Input,  Flex } from "antd";
-import { auth } from "../../services/firbase";
+import { Form, Button, Input, Flex } from "antd";
+import { auth } from "../../../services/firbase";
 
-import { passWalidation } from "../../core/constants/constants";
+import { passWalidation,  ROUTE_CONSTANTS } from "../../../core/constants/constants";
+
+import Wraper from "../../../components/shared/AuthWraper";
+import RegisterBanner from "../../../core/images/register.jpg"
 
 
 
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 
-import { ROUTE_CONSTANTS } from "../../core/constants/constants";
 // class Register extends React.Component {
 //   constructor () {
 //     super();
@@ -100,9 +103,8 @@ const navigate = useNavigate()
   };
 
   return (
-    <Flex gap="small" wrap justify="center">
-    <div className="registr">
-        <h2>Register</h2>
+   
+    <Wraper title="Register" banner={RegisterBanner}>
       <Form layout="vertical" form={form} onFinish={handleRegister}>
         <Form.Item
           label="First Name"
@@ -160,10 +162,41 @@ const navigate = useNavigate()
           }
          ]}
         >
-          <Input.Password type="text" placeholder="enter your password" />
+          <Input.Password type="text" placeholder="Enter your password" />
         </Form.Item>
 
-        <Button style={{ width: "100%" }} type="primary" htmlType="submit" loading={loading}>
+
+<Form.Item
+label="Confirm Password"
+name="confirm"
+ tooltip="Password must be 6-16 characters, including at least one number and one..."
+dependencies={["password"]} // sa nayum e password i popoxutyany talis enq label i name vor nayi dran
+rules={[
+  {
+    required: true,
+    message: 'Please input your Password!',
+  
+  }, 
+
+  ({getFieldValue})=>({
+validator(_, value){
+  if( !value || getFieldValue("password") === value){
+    return Promise.resolve()
+  }
+
+  return Promise.reject(new Error("The Password doesn't match"))
+}
+  })
+ ]
+// ays funkcian ant i funkcia e vory confirm e anum pass0y getfieldvalue- confirmi miji gracn e , value dependencieic ekac value
+ }
+>
+<Input.Password type="text" placeholder="Confirm Password" />
+
+</Form.Item>
+
+<Flex wrap justify="center" align="center">
+<Button style={{ width: "100%" }} type="primary" htmlType="submit" loading={loading}>
           Register
         </Button>
         
@@ -174,10 +207,11 @@ const navigate = useNavigate()
         </Button>
         
         </Link>
-      </Form>
-    </div>
-    <div className="regImg"></div>
-    </Flex>
+</Flex>
+        
+
+</Form>
+    </Wraper>
   );
 };
 

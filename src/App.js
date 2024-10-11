@@ -1,7 +1,9 @@
 
 import MainLayout from "./components/Layout/Main";
-import Login from "./pages/login";
-import Register from "./pages/register";
+// import Login from "./pages/auth/login";
+// import Register from "./pages/auth/register";
+
+import {Login, Register} from "./pages/auth"
 
 import 'antd/dist/reset.css'; 
 
