@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Form, Input, Button, Flex } from "antd";
-
+import {notification} from "antd"
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { auth } from "../../../services/firbase";
@@ -16,7 +16,7 @@ import Wraper from "../../../components/shared/AuthWraper";
 
 import { FaGoogle } from "react-icons/fa";
 
-const Login = () => {
+const Login = ({setIsAuth}) => {
   const [form] = Form.useForm();
 
   const [loading, setLoading] = useState(false);
@@ -29,14 +29,13 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       // Successful Google Sign-In
       console.log("Google sign-in successful:", result.user);
-
-/////
-// after successfulity the user must be go in their profile
-/////
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      notification.error({
+        message: "Invalid Login Credentials", // Fixed message typo
+      });
     }
   };
+
 
 
 
@@ -46,9 +45,11 @@ const Login = () => {
       const { email, password } = values;
       await signInWithEmailAndPassword(auth, email, password);
       form.resetFields();
-      
+      setIsAuth(true)
     } catch (error) {
-      console.log(error);
+      notification.error({
+        message: "Invalid Login Credentials", // Fixed message typo
+      });
     } finally {
       setLoading(false);
     }
