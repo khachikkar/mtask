@@ -1,6 +1,6 @@
 import MainLayout from "./components/Layout/Main";
-// import Login from "./pages/auth/login";
-// import Register from "./pages/auth/register";
+import LoadingWraper from "./components/shared/LoadingWraper";
+
 
 import { Login, Register } from "./pages/auth";
 
@@ -28,9 +28,10 @@ import { onAuthStateChanged } from "firebase/auth/cordova";
 const App = () => {
 
   const [isAuth, setIsAuth] = useState(false) // lucum enq login cabinet ejer qcelu logic y
-
+  const [loading, setLoading] = useState(true)
 useEffect(()=>{
   onAuthStateChanged(auth, (user)=>{
+    setLoading(false)
     setIsAuth(Boolean(user))
     console.log(user, ">>>>>>")
   })
@@ -38,6 +39,7 @@ useEffect(()=>{
 
 
   return (
+    <LoadingWraper loading={loading}>
     <RouterProvider
       router={createBrowserRouter(
         createRoutesFromElements(
@@ -50,6 +52,7 @@ useEffect(()=>{
         )
       )}
     />
+    </LoadingWraper> // lucum enq loading linelu harcy
   );
 };
 

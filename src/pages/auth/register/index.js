@@ -14,6 +14,7 @@ import Wraper from "../../../components/shared/AuthWraper";
 import RegisterBanner from "../../../core/images/register.jpg";
 
 
+
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";

@@ -1,0 +1,19 @@
+.userProfileAvatar{
+    background-color: purple;
+    cursor: pointer;
+}
+
+.ProfileDropDownContainer{
+    border: 1px solid green;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.dropDownMenu{
+    background-color: white;
+    /* flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex; */
+    /* border: 1px solid red; */
+}
