@@ -71,7 +71,7 @@ const Login = ({setIsAuth}) => {
             },
           ]}
         >
-          <Input type="email" placeholder="email" />
+          <Input type="email" placeholder="email" style={{ fontSize: '16px' }}/>
         </Form.Item>
 
         <Form.Item
