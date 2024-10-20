@@ -86,7 +86,17 @@ import { FaGoogle } from "react-icons/fa";
 
 // export default Register;
 
+import { useContext } from "react";
+import { AuthContext } from "../../../Context/authContext";
+
+
+
 const Register = () => {
+
+  const {setNameD, setGmail} = useContext(AuthContext) // get data
+
+
+
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -112,6 +122,9 @@ const Register = () => {
     const { email, password } = values;
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      console.log(values )
+      setNameD(values.name +" "+values.lastname) // set arecin name ev surname y
+      setGmail(values.email)
       navigate(ROUTE_CONSTANTS.LOGIN);
     } catch (e) {
       console.log(e);
@@ -119,6 +132,10 @@ const Register = () => {
       setLoading(false);
     }
   };
+
+
+
+
 
   return (
     <Wraper title="Register" banner={RegisterBanner}>
