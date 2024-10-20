@@ -44,6 +44,7 @@ const Login = ({setIsAuth}) => {
     try {
       const { email, password } = values;
       await signInWithEmailAndPassword(auth, email, password);
+      console.log(values)
       form.resetFields();
       setIsAuth(true)
     } catch (error) {

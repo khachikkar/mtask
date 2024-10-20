@@ -2,6 +2,10 @@ import React from 'react'
 import {Avatar, Dropdown,  Typography, Flex, theme} from "antd"
 import "./index.css"
 
+import { useContext } from 'react'
+import { AuthContext } from '../../../Context/authContext'
+
+
 
 const {Text } = Typography
 const {useToken} = theme
@@ -21,6 +25,9 @@ const items =[
 ]
 
 const AuthProfileDropDown = () => {
+
+  const {nameD, gmail} = useContext(AuthContext) // vercnum em anuny
+
 
 const {token} = useToken()
 
@@ -43,8 +50,8 @@ const {token} = useToken()
                 }} 
                 vertical align='center' justify='center'>
                     <Avatar src="https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png" />
-                    <Text>John Smith</Text>
-                    <Text type='secondary'>JohnSmith@gmail.com</Text>
+                    <Text>{nameD}</Text>
+                    <Text type='secondary'>{gmail}</Text>
                 </Flex>
                 {menu}
             </div>
@@ -52,7 +59,9 @@ const {token} = useToken()
     }}
     >
       <Avatar className='userProfileAvatar' size="large" >
-        JS
+        {
+          nameD.split(" ").map(item=> item[0]).join("")
+        }
       </Avatar>
     </Dropdown>
   )

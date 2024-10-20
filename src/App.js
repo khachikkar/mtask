@@ -25,6 +25,10 @@ import { useEffect, useState } from "react";
 import { auth } from "./services/firbase";
 import { onAuthStateChanged } from "firebase/auth/cordova";
 
+
+import { AuthContext } from "./Context/authContext";
+
+
 const App = () => {
 
   const [isAuth, setIsAuth] = useState(false) // lucum enq login cabinet ejer qcelu logic y
@@ -38,8 +42,11 @@ useEffect(()=>{
 },[])
 
 
+const [nameD, setNameD] = useState("NOthing Nothingyan")
+const [gmail, setGmail] =useState("")
   return (
-    <LoadingWraper loading={loading}>
+    <AuthContext.Provider value={{isAuth, x:10, nameD, setNameD, gmail, setGmail}}>
+    <LoadingWraper loading={loading}> 
     <RouterProvider
       router={createBrowserRouter(
         createRoutesFromElements(
@@ -52,7 +59,8 @@ useEffect(()=>{
         )
       )}
     />
-    </LoadingWraper> // lucum enq loading linelu harcy
+    </LoadingWraper>  
+    </AuthContext.Provider> // stexcum enq context props chain chanelu hamar
   );
 };
 
