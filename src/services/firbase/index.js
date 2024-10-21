@@ -18,6 +18,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+import {getFirestore} from "firebase/firestore"
+
 const firebaseConfig = {
   apiKey: "AIzaSyAStpy5lPXkAj8AdTq95XBumRZOFEG4L0o",
   authDomain: "jira-c10d1.firebaseapp.com",
@@ -29,9 +31,12 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app) // createing a firebase databasa
+
 const auth = getAuth(app);
 
 export {
+  db,
   auth
 }
 
