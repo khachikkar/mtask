@@ -19,6 +19,8 @@ import {
 } from "react-router-dom";
 import Intro from "./components/Intro";
 import Cabinet from "./pages/Cabinet";
+import Profile from "./pages/profile";
+
 import { useEffect, useState } from "react";
 
 
@@ -42,16 +44,17 @@ useEffect(()=>{
 },[])
 
 
-const [nameD, setNameD] = useState("NOthing Nothingyan")
-const [gmail, setGmail] =useState("")
+// const [nameD, setNameD] = useState("NOthing Nothingyan")
+// const [gmail, setGmail] =useState("")
   return (
-    <AuthContext.Provider value={{isAuth, x:10, nameD, setNameD, gmail, setGmail}}>
+    <AuthContext.Provider value={{isAuth}}>
     <LoadingWraper loading={loading}> 
     <RouterProvider
       router={createBrowserRouter(
         createRoutesFromElements(
           <Route path="/" element={<MainLayout />}>
             <Route path={ROUTE_CONSTANTS.INTRO} element={<Intro />} />
+            <Route path={ROUTE_CONSTANTS.PROFILE} element={ isAuth ? <Profile /> : <Navigate to={ROUTE_CONSTANTS.LOGIN} />} />
             <Route path={ROUTE_CONSTANTS.LOGIN} element={ isAuth ? <Navigate to={ROUTE_CONSTANTS.CABINET}/> : <Login setIsAuth={setIsAuth} />} />
             <Route path={ROUTE_CONSTANTS.REGISTER} element={ isAuth ?  <Navigate to={ROUTE_CONSTANTS.CABINET}/> : <Register />} />
             <Route path={ROUTE_CONSTANTS.CABINET} element={isAuth ? <Cabinet /> : <Navigate to={ROUTE_CONSTANTS.LOGIN} />} />

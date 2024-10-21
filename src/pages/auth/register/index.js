@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { Form, Button, Input, Flex } from "antd";
-import { auth } from "../../../services/firbase";
+import { auth, db } from "../../../services/firbase";
+
+import {doc, setDoc} from "firebase/firestore"
 
 import {
   passWalidation,
@@ -13,11 +15,11 @@ import {
 import Wraper from "../../../components/shared/AuthWraper";
 import RegisterBanner from "../../../core/images/register.jpg";
 
-
-
-import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
+
+import "./index.css";
+
 
 // class Register extends React.Component {
 //   constructor () {
@@ -86,14 +88,13 @@ import { FaGoogle } from "react-icons/fa";
 
 // export default Register;
 
-import { useContext } from "react";
-import { AuthContext } from "../../../Context/authContext";
+// import { useContext } from "react";
+// import { AuthContext } from "../../../Context/authContext";
 
 
 
 const Register = () => {
 
-  const {setNameD, setGmail} = useContext(AuthContext) // get data
 
 
 
@@ -119,12 +120,16 @@ const Register = () => {
 
   const handleRegister = async (values) => {
     setLoading(true);
-    const { email, password } = values;
+    const { name, lastname, email, password } = values;
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      // avelacnum enq datan db -um ->
+     const response =  await createUserWithEmailAndPassword(auth, email, password); // vercreci responsey
+     const {uid} = response.user; // estexic uid -n 
+     const createddoc = doc(db, "registerUsers", uid) // (1-databasan, papkan vortex qcum enq, u et user i idn)
+     await setDoc(createddoc, {
+      uid, name, lastname, email
+     }) // set enq anum datan 
       console.log(values )
-      setNameD(values.name +" "+values.lastname) // set arecin name ev surname y
-      setGmail(values.email)
       navigate(ROUTE_CONSTANTS.LOGIN);
     } catch (e) {
       console.log(e);

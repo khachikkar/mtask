@@ -5,6 +5,7 @@ export const ROUTE_CONSTANTS = {
     LOGIN: "/login",
     REGISTER: "/register",
     INTRO: "/",
-    CABINET: "/cabinet"
+    CABINET: "/cabinet",
+    PROFILE: "/profile"
 }
 
