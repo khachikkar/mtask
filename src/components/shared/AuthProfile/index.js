@@ -1,55 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {Avatar, Dropdown,  Typography, Flex, theme} from "antd"
 import {signOut} from "firebase/auth"
 import { auth } from '../../../services/firbase'
 
 import { useNavigate } from 'react-router-dom'
 
-import "./index.css"
+
 import { ROUTE_CONSTANTS } from '../../../core/constants/constants'
 
-// import { useContext } from 'react'
+
+
+
+import "./index.css"
 // import { AuthContext } from '../../../Context/authContext'
-
-
-import {doc, getDoc} from "firebase/firestore"
-import { db } from '../../../services/firbase'
-
 
 const {Text } = Typography
 const {useToken} = theme
 
 
 
-const AuthProfileDropDown = () => {
-
-  // const {nameD, gmail} = useContext(AuthContext) // vercnum em anuny
-  const [userData, setUserData] =useState(null)
+const AuthProfileDropDown = ({userProfileInfo}) => {
 
 
 const navigate = useNavigate()
 
-useEffect(()=>{
-  const fetchUserData = async ()=>{
-    const user = auth.currentUser
-    if(user){
-      try{
-        const docRef = doc(db, "registerUsers", user.uid)
-        const docSnap = await getDoc(docRef)
-            if(docSnap.exists()){
-              setUserData(docSnap.data())
-            }else{
-              console.log("no such doc")
-            }
 
-      }catch(e){
-        console.log(e, "user Error message")
-      }
-    }
-  }
-
-  fetchUserData()
-}, [])
 
 
   const handleSignOut = async()=>{
@@ -62,6 +37,14 @@ useEffect(()=>{
   }
   
   
+const handlefirstLetters =  ({name, lastname})=>{
+
+if(name && lastname){
+  return `${name[0]} ${lastname[0]}`
+}
+return "..."
+}
+
   
   const items =[
       {
@@ -85,10 +68,15 @@ useEffect(()=>{
 
 
 
-console.log(userData)
 
 
-const {token} = useToken()
+
+const {token} = useToken() // dizayni hamar e
+
+
+// const {userProfileInfo} = useContext(AuthContext)
+const {name, lastname, email} = userProfileInfo
+// console.log(userProfileInfo, "LLLLLLL")
 
   return (
     <Dropdown
@@ -109,8 +97,8 @@ const {token} = useToken()
                 }} 
                 vertical align='center' justify='center'>
                     <Avatar src="https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png" />
-                    <Text>{userData.name} {userData.lastname}</Text>
-                    <Text type='secondary'>{userData.email}</Text>
+                    <Text>{name} {lastname}</Text>
+                    <Text type='secondary'>{email}</Text>
                 </Flex>
                 {menu}
             </div>
@@ -118,13 +106,11 @@ const {token} = useToken()
     }}
     >
       <Avatar className='userProfileAvatar' size="large" >
-        {/* {
-          nameD.split(" ").map(item=> item[0]).join("")
-        } */}
-        {
-         userData && userData.name && userData.lastname ? 
-    userData.name[0] + userData.lastname[0] : "KK"
-        }
+       
+     
+       {
+ handlefirstLetters(userProfileInfo)
+       }
       </Avatar>
     </Dropdown>
   )

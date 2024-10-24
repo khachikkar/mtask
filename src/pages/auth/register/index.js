@@ -8,6 +8,7 @@ import { auth, db } from "../../../services/firbase";
 import {doc, setDoc} from "firebase/firestore"
 
 import {
+  FIRESTORE_PATH__NAMES,
   passWalidation,
   ROUTE_CONSTANTS,
 } from "../../../core/constants/constants";
@@ -125,7 +126,7 @@ const Register = () => {
       // avelacnum enq datan db -um ->
      const response =  await createUserWithEmailAndPassword(auth, email, password); // vercreci responsey
      const {uid} = response.user; // estexic uid -n 
-     const createddoc = doc(db, "registerUsers", uid) // (1-databasan, papkan vortex qcum enq, u et user i idn)
+     const createddoc = doc(db,  FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid) // (1-databasan, papkan vortex qcum enq, u et user i idn)
      await setDoc(createddoc, {
       uid, name, lastname, email
      }) // set enq anum datan 

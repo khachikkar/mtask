@@ -12,7 +12,7 @@ import logo from "../../../core/images/mylogo.png"
 
 const Header = () => {
 
-const {isAuth} = useContext(AuthContext)
+const {isAuth, userProfileInfo} = useContext(AuthContext)
 
   return (
     <div className="main_header">
@@ -23,7 +23,7 @@ const {isAuth} = useContext(AuthContext)
         <div>
        
           {
-            isAuth ? <AuthProfileDropDown /> : 
+            isAuth ? <AuthProfileDropDown  userProfileInfo={userProfileInfo}/> : 
             <Link to={ROUTE_CONSTANTS.LOGIN}>
             <Button>Sign in</Button>
             </Link>
