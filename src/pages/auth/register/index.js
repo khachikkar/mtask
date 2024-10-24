@@ -106,11 +106,21 @@ const Register = () => {
 
   const handleWithGoogle = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const provider = new GoogleAuthProvider();
+
     try {
       const result = await signInWithPopup(auth, provider);
+      const {user} = result
+      const {uid, displayName, email} = user
+      const [name, lastname] = displayName.split(" ")
       // Successful Google Sign-In
-      console.log("Google sign-in successful:", result.user);
+      // console.log("Google sign-in successful:", result.user);
+
+      const createddoc = doc(db, FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid)
+      await setDoc(createddoc, {
+        uid, name, lastname, email
+      })
 
       // Navigate to the profile page after successful sign-in
       navigate(ROUTE_CONSTANTS.LOGIN);
