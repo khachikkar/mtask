@@ -6,9 +6,8 @@ import { Login, Register } from "./pages/auth";
 
 import "antd/dist/reset.css";
 
-import "./styles/global.css";
 
-import { ROUTE_CONSTANTS } from "./core/constants/constants";
+import {  FIRESTORE_PATH__NAMES, ROUTE_CONSTANTS } from "./core/constants/constants";
 
 import {
   RouterProvider,
@@ -24,30 +23,52 @@ import Profile from "./pages/profile";
 import { useEffect, useState } from "react";
 
 
-import { auth } from "./services/firbase";
+import { auth, db } from "./services/firbase";
+
 import { onAuthStateChanged } from "firebase/auth/cordova";
 
 
 import { AuthContext } from "./Context/authContext";
 
 
+// geting a data of logined user
+import {doc, getDoc} from "firebase/firestore"
+
+import "./styles/global.css";
+
+
 const App = () => {
 
   const [isAuth, setIsAuth] = useState(false) // lucum enq login cabinet ejer qcelu logic y
   const [loading, setLoading] = useState(true)
+  const [userProfileInfo, setUserProfileInfo] = useState({})
+
+const handleGetUserData = async (uid)=>{
+  const docRef = doc(db, FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid) // vercnum enq hamapatasxan uid ov datan
+  const response = await getDoc(docRef)
+    if(response.exists()){
+      // console.log(response.data())
+      setUserProfileInfo(response.data())
+    }
+}
+
+
 useEffect(()=>{
   onAuthStateChanged(auth, (user)=>{
+    user?.uid && handleGetUserData(user.uid)
+    
+// console.log(user)
+
     setLoading(false)
     setIsAuth(Boolean(user))
-    console.log(user, ">>>>>>")
+    // console.log(user, ">>>>>>")
   })
 },[])
 
 
-// const [nameD, setNameD] = useState("NOthing Nothingyan")
-// const [gmail, setGmail] =useState("")
+
   return (
-    <AuthContext.Provider value={{isAuth}}>
+    <AuthContext.Provider value={{isAuth, userProfileInfo}}>
     <LoadingWraper loading={loading}> 
     <RouterProvider
       router={createBrowserRouter(
