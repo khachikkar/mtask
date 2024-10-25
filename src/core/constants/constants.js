@@ -10,6 +10,6 @@ export const ROUTE_CONSTANTS = {
     REGISTER: "/register",
     INTRO: "/",
     CABINET: "/cabinet",
-    PROFILE: "/profile"
+    PROFILE: "/cabinet/profile"
 }
 

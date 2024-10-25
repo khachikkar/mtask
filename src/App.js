@@ -1,6 +1,6 @@
 import MainLayout from "./components/Layout/Main";
 import LoadingWraper from "./components/shared/LoadingWraper";
-
+import CabinetLayout from "./components/Layout/Cabinet";
 
 import { Login, Register } from "./pages/auth";
 
@@ -17,7 +17,7 @@ import {
   Navigate
 } from "react-router-dom";
 import Intro from "./components/Intro";
-import Cabinet from "./pages/Cabinet";
+// import Cabinet from "./pages/Cabinet";
 import Profile from "./pages/profile";
 
 import { useEffect, useState } from "react";
@@ -75,10 +75,19 @@ useEffect(()=>{
         createRoutesFromElements(
           <Route path="/" element={<MainLayout />}>
             <Route path={ROUTE_CONSTANTS.INTRO} element={<Intro />} />
-            <Route path={ROUTE_CONSTANTS.PROFILE} element={ isAuth ? <Profile /> : <Navigate to={ROUTE_CONSTANTS.LOGIN} />} />
             <Route path={ROUTE_CONSTANTS.LOGIN} element={ isAuth ? <Navigate to={ROUTE_CONSTANTS.CABINET}/> : <Login setIsAuth={setIsAuth} />} />
             <Route path={ROUTE_CONSTANTS.REGISTER} element={ isAuth ?  <Navigate to={ROUTE_CONSTANTS.CABINET}/> : <Register />} />
-            <Route path={ROUTE_CONSTANTS.CABINET} element={isAuth ? <Cabinet /> : <Navigate to={ROUTE_CONSTANTS.LOGIN} />} />
+
+{/* Cabinet Layout */}
+          <Route path={ROUTE_CONSTANTS.CABINET}
+           element={isAuth ? <CabinetLayout /> :  <Navigate to={ROUTE_CONSTANTS.LOGIN} />}
+           >
+
+            <Route path={ROUTE_CONSTANTS.PROFILE} element={ <Profile /> } />
+
+          </Route>
+
+            {/* <Route path={ROUTE_CONSTANTS.CABINET} element={isAuth ? <Cabinet /> : <Navigate to={ROUTE_CONSTANTS.LOGIN} />} /> */}
           </Route>
         )
       )}
