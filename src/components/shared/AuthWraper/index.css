@@ -25,10 +25,12 @@
 
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 810px) {
     .authWraper{
         display: flex;
         flex-direction: column;
+        width: 100%;
+        padding: 6px 0;
     }
     .bannerCont{
         display: none;
