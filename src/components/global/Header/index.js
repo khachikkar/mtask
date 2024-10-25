@@ -8,7 +8,8 @@ import "./index.css";
 import { Link } from "react-router-dom";
 import { ROUTE_CONSTANTS } from "../../../core/constants/constants";
 
-import logo from "../../../core/images/mylogo.png"
+// import logo from "../../../core/images/mylogo.png"
+import logohalloween from "../../../core/images/logoHallowenn.png"
 
 const Header = () => {
 
@@ -18,7 +19,7 @@ const {isAuth, userProfileInfo} = useContext(AuthContext)
     <div className="main_header">
       <Flex justify="space-between" align="center">
 <Link to={isAuth ? ROUTE_CONSTANTS.CABINET : ROUTE_CONSTANTS.INTRO}>
-<img className="Header_logo" src={logo} alt="logo" />
+<img className="Header_logo" src={logohalloween} alt="logo" />
 </Link>
         <div>
        
