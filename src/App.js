@@ -20,7 +20,7 @@ import Intro from "./components/Intro";
 // import Cabinet from "./pages/Cabinet";
 import Profile from "./pages/profile";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
 import { auth, db } from "./services/firbase";
@@ -43,14 +43,17 @@ const App = () => {
   const [loading, setLoading] = useState(true)
   const [userProfileInfo, setUserProfileInfo] = useState({})
 
-const handleGetUserData = async (uid)=>{
+
+const handleGetUserData = useCallback( async (uid)=>{
   const docRef = doc(db, FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid) // vercnum enq hamapatasxan uid ov datan
-  const response = await getDoc(docRef)
-    if(response.exists()){
-      // console.log(response.data())
-      setUserProfileInfo(response.data())
-    }
-}
+    const response = await getDoc(docRef)
+      if(response.exists()){
+        // console.log(response.data())
+        setUserProfileInfo(response.data())
+      }
+}, [])
+
+
 
 
 useEffect(()=>{
@@ -63,12 +66,14 @@ useEffect(()=>{
     setIsAuth(Boolean(user))
     // console.log(user, ">>>>>>")
   })
-},[])
+},[handleGetUserData])
+
+
 
 
 
   return (
-    <AuthContext.Provider value={{isAuth, userProfileInfo}}>
+    <AuthContext.Provider value={{isAuth, userProfileInfo, handleGetUserData}}>
     <LoadingWraper loading={loading}> 
     <RouterProvider
       router={createBrowserRouter(
