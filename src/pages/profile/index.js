@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import {Button, Form, Input, message, notification, Upload } from "antd"
+import {Button, Form, Input,  notification, Upload } from "antd"
 
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -10,7 +10,7 @@ import { doc,  updateDoc } from 'firebase/firestore' // edit enq anum datan basa
 
 
 // firebase storige i hamar
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+// import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 
 
@@ -29,6 +29,7 @@ const Profile = () => {
 const {userProfileInfo, handleGetUserData} = useContext(AuthContext)
 const [form] = Form.useForm()
 const [loading, setLoading] = useState(false)
+
 const {uid, image, ...restData} = userProfileInfo
 
 
@@ -41,8 +42,8 @@ const {uid, image, ...restData} = userProfileInfo
 
 // handle Image Upload and Preview
 
-const [imageUrl, setImageUrl] = useState(image || null)
-const storage = getStorage()
+// const [imageUrl, setImageUrl] = useState(image || null)
+// const storage = getStorage()
 
 
 useEffect(()=>{
@@ -54,38 +55,38 @@ useEffect(()=>{
 
 
 
-const handleUpload = (options)=>{
+// const handleUpload = (options)=>{
 
-  const { file, onSuccess, onError } = options;
+//   const { file, onSuccess, onError } = options;
 
-  const storigeref = ref(storage, `images/${uid}/${file.name}`)
-  const uploadTask = uploadBytesResumable(storigeref, file)
+//   const storigeref = ref(storage, `images/${uid}/${file.name}`)
+//   const uploadTask = uploadBytesResumable(storigeref, file)
 
-uploadTask.on(
-  "state_changed",
-  null,
-  (error)=> {
-    message.error(`Upload failed: ${error.message}`)
-    onError(error)
-  },
+// uploadTask.on(
+//   "state_changed",
+//   null,
+//   (error)=> {
+//     message.error(`Upload failed: ${error.message}`)
+//     onError(error)
+//   },
   
-  async ()=>{
-    const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref)
-    setImageUrl(downloadUrl)
+//   async ()=>{
+//     const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref)
+//     setImageUrl(downloadUrl)
 
-    console.log(downloadUrl, ">>>>>>>>>>>>>>>>>>>>>>>")
+//     console.log(downloadUrl, ">>>>>>>>>>>>>>>>>>>>>>>")
 
-    onSuccess(null, file)
-    message.success("Upload Successfull")
+//     onSuccess(null, file)
+//     message.success("Upload Successfull")
     
-  }
+//   }
 
-)
+// )
 
-}
+// }
 
 
-console.log(imageUrl, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+// console.log(imageUrl, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 
 // handle update user data 
 
@@ -97,7 +98,7 @@ const handleEditUserProfile = async (values)=>{
   const  userDocRef = doc(db, FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid )
 
 
-  const updatedValues = { ...values, image: imageUrl || userProfileInfo.image  };  ///
+  const updatedValues = { ...values  };  ///
 
 
   await updateDoc(userDocRef, updatedValues)
@@ -133,12 +134,12 @@ name="image"
 >
 
 <Upload
-listType="picture-card"
-showUploadList={false}
-customRequest={handleUpload}
+// listType="picture-card"
+// showUploadList={false}
+// customRequest={handleUpload}
 >
 
-{imageUrl ? <img src={imageUrl} alt="Uploaded" style={{ width: '100%' }} /> : <PlusOutlined />}
+{/* {imageUrl ? <img src={imageUrl} alt="Uploaded" style={{ width: '100%' }} /> : <PlusOutlined />} */}
 
 </Upload>
 
