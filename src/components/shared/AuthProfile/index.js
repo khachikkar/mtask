@@ -75,7 +75,7 @@ const {token} = useToken() // dizayni hamar e
 
 
 // const {userProfileInfo} = useContext(AuthContext)
-const {name, lastname, email, phonenumber, position, image} = userProfileInfo
+const {name, lastname, email, phonenumber, position} = userProfileInfo
 console.log(userProfileInfo, "LLLLLLL")
 
   return (
@@ -96,7 +96,7 @@ console.log(userProfileInfo, "LLLLLLL")
                     padding:token.sizeMS
                 }} 
                 vertical align='center' justify='center'>
-                    <Avatar src={image || "https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png"}  />
+                    <Avatar src="https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png"  />
                     <Text>{name} {lastname}</Text>
                     <Text type='secondary'>{email}</Text>
                     <Text type='secondary'>{phonenumber || ""}</Text>
@@ -112,8 +112,10 @@ console.log(userProfileInfo, "LLLLLLL")
       <Avatar   className='userProfileAvatar' size="large" >
        
        {/* changed */}
-      {image ? <img src={image} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} /> : handlefirstLetters(userProfileInfo)}     
-
+      {/* {image ? <img src={image} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} /> : handlefirstLetters(userProfileInfo)}      */}
+{
+  handlefirstLetters(userProfileInfo)
+}
       </Avatar>
     </Dropdown>
   )
