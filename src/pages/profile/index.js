@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import {Button, Form, Input,  notification, Upload } from "antd"
 
-import { PlusOutlined } from '@ant-design/icons';
+// import { PlusOutlined } from '@ant-design/icons';
 
 
 import  {db} from "../../services/firbase"
