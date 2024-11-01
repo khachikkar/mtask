@@ -8,7 +8,7 @@ import "./index.css";
 import { Link } from "react-router-dom";
 import { ROUTE_CONSTANTS } from "../../../core/constants/constants";
 
-import {useSelector} from "react-redux";
+// import {useSelector} from "react-redux";
 
 // import logo from "../../../core/images/mylogo.png"
 import logo from "../../../core/images/mylogo.png"
@@ -18,7 +18,7 @@ const Header = () => {
 const {isAuth, userProfileInfo} = useContext(AuthContext)
 
 
-const {count} = useSelector((store)=>store.userProfile)
+// const {count} = useSelector((store)=>store.userProfile)
 
 
   return (

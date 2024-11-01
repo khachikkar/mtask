@@ -6,8 +6,8 @@ import { doc,  updateDoc } from 'firebase/firestore' // edit enq anum datan basa
 // firebase storige i hamar
 // import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
-import { useDispatch} from "react-redux"; // vorpesi stori mej set u get anenq
-import {increment, decrement} from "../../state-management/slices/userProfile";
+// import { useDispatch} from "react-redux"; // vorpesi stori mej set u get anenq
+// import {increment, decrement} from "../../state-management/slices/userProfile";
 
 
 import { AuthContext } from '../../Context/authContext'
@@ -26,7 +26,7 @@ const Profile = () => {
 
 
 // const {count} = useSelector((store)=>store.userProfile)
-const dispatch = useDispatch()
+// const dispatch = useDispatch()
 
 
 
