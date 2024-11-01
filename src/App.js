@@ -30,7 +30,8 @@ import { onAuthStateChanged } from "firebase/auth/cordova";
 
 import { AuthContext } from "./Context/authContext";
 
-
+import {Provider} from "react-redux"; // redux i providrn e
+import {store} from "./state-management/store"
 // geting a data of logined user
 import {doc, getDoc} from "firebase/firestore"
 
@@ -73,6 +74,8 @@ useEffect(()=>{
 
 
   return (
+      <Provider store={store}>
+
     <AuthContext.Provider value={{isAuth, userProfileInfo, handleGetUserData}}>
     <LoadingWraper loading={loading}> 
     <RouterProvider
@@ -98,7 +101,8 @@ useEffect(()=>{
       )}
     />
     </LoadingWraper>  
-    </AuthContext.Provider> // stexcum enq context props chain chanelu hamar
+    </AuthContext.Provider>
+    </Provider>
   );
 };
 
