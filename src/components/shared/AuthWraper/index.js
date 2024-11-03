@@ -12,7 +12,7 @@ const Wraper = ({title, children, banner}) => {
         {/* miangamic props ov childrenic ekav banner i url y */}
 
       </div>
-      <div className='formCont'>
+      <div className='formContr'>
         <Title level={3}>
             {title}
         </Title>

@@ -18,8 +18,9 @@
     } */
 }
 
-.formCont{
+.formContr{
     border: 1px solid rgba(0, 0, 0, 0.207);
+    /*border: 1px solid red;*/
     padding: 12px;
     border-radius: 0 12px 12px 0;
 
