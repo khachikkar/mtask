@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import {Button, Form, Input,  notification } from "antd"
+import {Button, Form, Input,  notification, Tag } from "antd"
 import  {db} from "../../services/firbase"
 import { doc,  updateDoc } from 'firebase/firestore' // edit enq anum datan basaum
 
 // firebase storige i hamar
 // import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
-// import { useDispatch} from "react-redux"; // vorpesi stori mej set u get anenq
-// import {increment, decrement} from "../../state-management/slices/userProfile";
+import { useDispatch} from "react-redux"; // vorpesi stori mej set u get anenq
+import {increment, decrement} from "../../state-management/slices/userProfile";
 
 
 import { AuthContext } from '../../Context/authContext'
@@ -25,8 +25,7 @@ import { FIRESTORE_PATH__NAMES } from '../../core/constants/constants'
 const Profile = () => {
 
 
-// const {count} = useSelector((store)=>store.userProfile)
-// const dispatch = useDispatch()
+const dispatch = useDispatch()
 
 
 
@@ -38,7 +37,7 @@ const [loading, setLoading] = useState(false)
 const {uid, image, ...restData} = userProfileInfo
 
 
-
+const {name, lastname, email, position, status} = userProfileInfo
 
 
 useEffect(()=>{
@@ -78,50 +77,65 @@ const handleEditUserProfile = async (values)=>{
 
 
   return (
-    <div className='FormPageCont'>
+<div className='ProfileContainer'>
 
-        {/*<button onClick={()=>dispatch(decrement())}>-</button>*/}
-        {/*/!*<span>{count}</span>*!/*/}
-        {/*<button onClick={()=>dispatch(increment())}>+</button>*/}
-
-
-      <h2>User Profile</h2>
-      <Form layout='vertical' form={form} onFinish={handleEditUserProfile}>
+        <button onClick={()=>dispatch(decrement())}>-</button>
+        {/*<span>{count}</span>*/}
+        <button onClick={()=>dispatch(increment())}>+</button>
 
 
-{/*      <Form.Item*/}
-{/*label="Profile Image"*/}
-{/*name="image"*/}
-{/*>*/}
+<h2>User Profile</h2>
 
-{/*<Upload*/}
-{/*// listType="picture-card"*/}
-{/*// showUploadList={false}*/}
-{/*// customRequest={handleUpload}*/}
-{/*>*/}
+<div className="ProfileVisualPart">
+        <div>
+            <img
+                src={ "https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png"}
+                alt="sts"
+            />
+        </div>
+        <div className="VisualProfPart">
 
-{/*/!* {imageUrl ? <img src={imageUrl} alt="Uploaded" style={{ width: '100%' }} /> : <PlusOutlined />} *!/*/}
+                <h1>{name} {lastname}</h1>
+                <h4>{position}</h4>
+            <Tag className="tagStatus" color="magenta">{status}</Tag>
+                <span>{email}</span>
 
-{/*</Upload>*/}
+        </div>
+    </div>
 
-{/*</Form.Item>*/}
-
-
-
+<Form className="formCont" layout='vertical' form={form} onFinish={handleEditUserProfile}>
 
 
-<Form.Item
-label="Firstname"
-name="name"
-rules={[
-  {
-    required: true,
-    message: "Please input your first name!",
-  },
-]}
+        {/*      <Form.Item*/}
+        {/*label="Profile Image"*/}
+        {/*name="image"*/}
+        {/*>*/}
 
->
-<Input placeholder='Firstname' />
+        {/*<Upload*/}
+        {/*// listType="picture-card"*/}
+        {/*// showUploadList={false}*/}
+        {/*// customRequest={handleUpload}*/}
+        {/*>*/}
+
+        {/*/!* {imageUrl ? <img src={imageUrl} alt="Uploaded" style={{ width: '100%' }} /> : <PlusOutlined />} *!/*/}
+
+        {/*</Upload>*/}
+
+        {/*</Form.Item>*/}
+
+
+        <Form.Item
+            label="Firstname"
+            name="name"
+            rules={[
+                {
+                    required: true,
+                    message: "Please input your first name!",
+                },
+            ]}
+
+        >
+            <Input placeholder='Firstname'/>
 </Form.Item>
 
 <Form.Item
@@ -171,7 +185,7 @@ rules={[
 </Form.Item>
 
 <Form.Item
-label="gender"
+label="Gender"
 name="gender"
 rules={[
   {
@@ -183,10 +197,16 @@ rules={[
 <Input placeholder='Gender male, female ....' />
 </Form.Item>
 
-<Button loading={loading} type='primary' htmlType='submit'>Submit</Button>
+    <Form.Item
+        label="Work Status"
+        name="status"
+    >
+        <Input placeholder='Status..on Work, Vacation ...' />
+    </Form.Item>
 
-      </Form>
-    </div>
+<Button loading={loading} type='primary' htmlType='submit'>Submit</Button>
+</Form>
+</div>
   )
 }
 
