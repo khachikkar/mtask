@@ -39,6 +39,8 @@ useEffect(()=>{
 dispatch(fetchUserProfileInfo()) //////////////////////
 },[dispatch])
 
+console.log("hello")
+
 
   return (
     <LoadingWraper loading={loading}> 
