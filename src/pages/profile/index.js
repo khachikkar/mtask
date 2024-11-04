@@ -3,47 +3,32 @@ import {Button, Form, Input,  notification, Tag } from "antd"
 import  {db} from "../../services/firbase"
 import { doc,  updateDoc } from 'firebase/firestore' // edit enq anum datan basaum
 
-// firebase storige i hamar
-// import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-
-import { useDispatch} from "react-redux"; // vorpesi stori mej set u get anenq
-import {increment, decrement} from "../../state-management/slices/userProfile";
-
-
-import { AuthContext } from '../../Context/authContext'
-import { useContext } from 'react'
 
 
 import "./index.css"
 import { FIRESTORE_PATH__NAMES } from '../../core/constants/constants'
-
-
-
-
+import {useDispatch, useSelector} from "react-redux";
+import {fetchUserProfileInfo} from "../../state-management/slices/userProfile";
 
 
 const Profile = () => {
 
+    const dispatch = useDispatch() ////////
+    const {authUserInfo: {userData}} = useSelector(store=> store.userProfile); /////////
 
-const dispatch = useDispatch()
-
-
-
-
-
-const {userProfileInfo, handleGetUserData} = useContext(AuthContext)
+// const {userProfileInfo, handleGetUserData} = useContext(AuthContext)
 const [form] = Form.useForm()
 const [loading, setLoading] = useState(false)
-const {uid, image, ...restData} = userProfileInfo
+const {uid, ...restData} = userData /////
 
 
-const {name, lastname, email, position, status} = userProfileInfo
+const {name, lastname, email, position, status} = userData ///////
 
 
 useEffect(()=>{
   form.setFieldsValue(restData)
   // setImageUrl(image); // set image
-  }, [restData, form, userProfileInfo])
+  }, [restData, form])
   
   
 
@@ -59,7 +44,7 @@ const handleEditUserProfile = async (values)=>{
 
 
   await updateDoc(userDocRef, updatedValues)
-  handleGetUserData(uid)
+dispatch(fetchUserProfileInfo)
   notification.success({
     message: "User Information successfully updated"
   })
@@ -79,9 +64,6 @@ const handleEditUserProfile = async (values)=>{
   return (
 <div className='ProfileContainer'>
 
-        <button onClick={()=>dispatch(decrement())}>-</button>
-        {/*<span>{count}</span>*/}
-        <button onClick={()=>dispatch(increment())}>+</button>
 
 
 <h2>User Profile</h2>
@@ -104,25 +86,6 @@ const handleEditUserProfile = async (values)=>{
     </div>
 
 <Form className="formCont" layout='vertical' form={form} onFinish={handleEditUserProfile}>
-
-
-        {/*      <Form.Item*/}
-        {/*label="Profile Image"*/}
-        {/*name="image"*/}
-        {/*>*/}
-
-        {/*<Upload*/}
-        {/*// listType="picture-card"*/}
-        {/*// showUploadList={false}*/}
-        {/*// customRequest={handleUpload}*/}
-        {/*>*/}
-
-        {/*/!* {imageUrl ? <img src={imageUrl} alt="Uploaded" style={{ width: '100%' }} /> : <PlusOutlined />} *!/*/}
-
-        {/*</Upload>*/}
-
-        {/*</Form.Item>*/}
-
 
         <Form.Item
             label="Firstname"

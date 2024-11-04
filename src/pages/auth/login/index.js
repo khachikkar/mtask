@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Form, Input, Button, Flex } from "antd";
 import {notification} from "antd"
@@ -16,10 +16,13 @@ import Wraper from "../../../components/shared/AuthWraper";
 
 import { FaGoogle } from "react-icons/fa";
 
-const Login = ({setIsAuth}) => {
-  const [form] = Form.useForm();
+import {setIsAuth} from "../../../state-management/slices/userProfile";
+import {useDispatch} from "react-redux";
 
-  const [loading, setLoading] = useState(false);
+const Login = () => {
+  const [form] = Form.useForm();
+  const dispatch = useDispatch(); /////
+
 
 
   const handleWithGoogle = async (e) => {
@@ -38,21 +41,17 @@ const Login = ({setIsAuth}) => {
 
 
 
-
   const handleLogin = async (values) => {
-    setLoading(true);
+
     try {
       const { email, password } = values;
       await signInWithEmailAndPassword(auth, email, password);
-      console.log(values)
       form.resetFields();
-      setIsAuth(true)
+      dispatch(setIsAuth(true)) /////////
     } catch (error) {
       notification.error({
         message: "Invalid Login Credentials", // Fixed message typo
       });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -94,7 +93,7 @@ const Login = ({setIsAuth}) => {
           style={{ width: "100%" }}
           type="primary"
           htmlType="submit"
-          loading={loading}
+          // loading={loading}
         >
           Login
         </Button>

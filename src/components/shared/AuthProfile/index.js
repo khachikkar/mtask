@@ -30,7 +30,7 @@ const navigate = useNavigate()
   const handleSignOut = async()=>{
     // console.log("signout")
     try{
-      await signOut(auth) // poxancum enq authy vor kaskana uma sign out anum
+      await signOut(auth) // taking auth that function know whom to sign out
     }catch(e){
       console.log(e, "sign out message")
     }
@@ -71,12 +71,12 @@ return "..."
 
 
 
-const {token} = useToken() // dizayni hamar e
+const {token} = useToken() // for design
 
 
 // const {userProfileInfo} = useContext(AuthContext)
 const {name, lastname, email, phonenumber, position} = userProfileInfo
-console.log(userProfileInfo, "LLLLLLL")
+
 
   return (
     <Dropdown
@@ -111,8 +111,7 @@ console.log(userProfileInfo, "LLLLLLL")
     >
       <Avatar   className='userProfileAvatar' size="large" >
        
-       {/* changed */}
-      {/* {image ? <img src={image} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} /> : handlefirstLetters(userProfileInfo)}      */}
+
 {
   handlefirstLetters(userProfileInfo)
 }

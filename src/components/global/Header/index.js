@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { AuthContext } from "../../../Context/authContext";
+
 
 
 import { Button, Flex } from "antd";
@@ -15,23 +14,24 @@ import logo from "../../../core/images/logoChristmas.png"
 
 const Header = () => {
 
-const {isAuth, userProfileInfo} = useContext(AuthContext)
 
 
-const {count} = useSelector((store)=>store.userProfile)
+
+const {authUserInfo: {isAuth, userData}}= useSelector((store)=>store.userProfile) /////////
+// console.log(authUserInfo, "auth")
+
 
 
   return (
     <div className="main_header">
       <Flex justify="space-between" align="center">
 <Link to={isAuth ? ROUTE_CONSTANTS.CABINET : ROUTE_CONSTANTS.INTRO}>
-    {count}
 <img className="Header_logo" src={logo} alt="logo" />
 </Link>
         <div>
-       
+
           {
-            isAuth ? <AuthProfileDropDown  userProfileInfo={userProfileInfo}/> : 
+            isAuth ? <AuthProfileDropDown  userProfileInfo={userData}/> :
             <Link to={ROUTE_CONSTANTS.LOGIN}>
             <Button>Sign in</Button>
             </Link>
