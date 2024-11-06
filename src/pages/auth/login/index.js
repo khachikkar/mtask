@@ -16,7 +16,7 @@ import Wraper from "../../../components/shared/AuthWraper";
 
 import { FaGoogle } from "react-icons/fa";
 
-import {setIsAuth} from "../../../state-management/slices/userProfile";
+import {fetchUserProfileInfo, setIsAuth} from "../../../state-management/slices/userProfile";
 import {useDispatch} from "react-redux";
 
 const Login = () => {
@@ -47,7 +47,7 @@ const Login = () => {
       const { email, password } = values;
       await signInWithEmailAndPassword(auth, email, password);
       form.resetFields();
-      dispatch(setIsAuth(true)) /////////
+      dispatch(fetchUserProfileInfo()) ///////// setIsauth i poxaren anum enq sa
     } catch (error) {
       notification.error({
         message: "Invalid Login Credentials", // Fixed message typo

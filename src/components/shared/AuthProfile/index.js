@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { ROUTE_CONSTANTS } from '../../../core/constants/constants'
 
-
+import {useDispatch} from "react-redux";
 
 
 import "./index.css"
-// import { AuthContext } from '../../../Context/authContext'
+import {setIsAuth} from "../../../state-management/slices/userProfile";
+
 
 const {Text } = Typography
 const {useToken} = theme
@@ -23,7 +24,7 @@ const AuthProfileDropDown = ({userProfileInfo}) => {
 
 
 const navigate = useNavigate()
-
+const dispatch = useDispatch()
 
 
 
@@ -31,6 +32,7 @@ const navigate = useNavigate()
     // console.log("signout")
     try{
       await signOut(auth) // taking auth that function know whom to sign out
+        dispatch(setIsAuth(false)) /// for sign out
     }catch(e){
       console.log(e, "sign out message")
     }

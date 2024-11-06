@@ -39,7 +39,7 @@ useEffect(()=>{
 dispatch(fetchUserProfileInfo()) //////////////////////
 },[dispatch])
 
-console.log("hello")
+
 
 
   return (

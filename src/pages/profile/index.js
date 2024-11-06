@@ -9,6 +9,7 @@ import "./index.css"
 import { FIRESTORE_PATH__NAMES } from '../../core/constants/constants'
 import {useDispatch, useSelector} from "react-redux";
 import {fetchUserProfileInfo} from "../../state-management/slices/userProfile";
+import ImageUpload from "../../components/shared/ImageUpload";
 
 
 const Profile = () => {
@@ -86,6 +87,15 @@ dispatch(fetchUserProfileInfo)
     </div>
 
 <Form className="formCont" layout='vertical' form={form} onFinish={handleEditUserProfile}>
+
+    <Form.Item
+        label="Image"
+        name="image"
+    >
+        <ImageUpload />
+        
+    </Form.Item>
+
 
         <Form.Item
             label="Firstname"
