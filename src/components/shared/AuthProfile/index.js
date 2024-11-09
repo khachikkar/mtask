@@ -19,13 +19,20 @@ const {Text } = Typography
 const {useToken} = theme
 
 
+const handlefirstLetters =  ({name, lastname})=>{
+
+    if(name && lastname){
+        return `${name[0]} ${lastname[0]}`
+    }
+    return "..."
+}
+
 
 const AuthProfileDropDown = ({userProfileInfo}) => {
 
 
 const navigate = useNavigate()
 const dispatch = useDispatch()
-
 
 
   const handleSignOut = async()=>{
@@ -39,13 +46,7 @@ const dispatch = useDispatch()
   }
   
   
-const handlefirstLetters =  ({name, lastname})=>{
 
-if(name && lastname){
-  return `${name[0]} ${lastname[0]}`
-}
-return "..."
-}
 
   
   const items =[
@@ -98,7 +99,8 @@ const {name, lastname, email, phonenumber, position} = userProfileInfo
                     padding:token.sizeMS
                 }} 
                 vertical align='center' justify='center'>
-                    <Avatar src="https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png"  />
+                    {/*https://png.pngtree.com/png-vector/20220807/ourmid/pngtree-man-avatar-wearing-gray-suit-png-image_6102786.png*/}
+                    <Avatar src={userProfileInfo.imgUrl}  />
                     <Text>{name} {lastname}</Text>
                     <Text type='secondary'>{email}</Text>
                     <Text type='secondary'>{phonenumber || ""}</Text>
@@ -111,12 +113,17 @@ const {name, lastname, email, phonenumber, position} = userProfileInfo
         )
     }}
     >
-      <Avatar   className='userProfileAvatar' size="large" >
+
+
+      <Avatar   className='userProfileAvatar' size="large" src={userProfileInfo.imgUrl } >
        
 
 {
   handlefirstLetters(userProfileInfo)
 }
+
+
+
       </Avatar>
     </Dropdown>
   )

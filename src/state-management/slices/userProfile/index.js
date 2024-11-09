@@ -11,7 +11,7 @@ const initialState = {
 loading : true,
 authUserInfo: {
     isAuth: false,
-    userData : {}
+    userData : {},
 },
 error: null
 }
@@ -55,7 +55,11 @@ const userProfileSlice = createSlice({
     reducers :{ // todo
         setIsAuth: (state, action)=>{
             state.authUserInfo.isAuth = action.payload
+        },
+        setImageProfileUrl: (state, action)=>{
+            state.authUserInfo.userData.imgUrl = action.payload
         }
+
     },
     extraReducers: (promise)=>{
 promise
@@ -77,5 +81,5 @@ promise
 
 })
 
-export const {setIsAuth} = userProfileSlice.actions
+export const {setIsAuth, setImageProfileUrl} = userProfileSlice.actions
 export  default  userProfileSlice.reducer
