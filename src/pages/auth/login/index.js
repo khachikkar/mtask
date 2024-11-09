@@ -16,7 +16,7 @@ import Wraper from "../../../components/shared/AuthWraper";
 
 import { FaGoogle } from "react-icons/fa";
 
-import {fetchUserProfileInfo, setIsAuth} from "../../../state-management/slices/userProfile";
+import {fetchUserProfileInfo} from "../../../state-management/slices/userProfile";
 import {useDispatch} from "react-redux";
 
 const Login = () => {

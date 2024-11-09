@@ -5,14 +5,14 @@ import { doc,  updateDoc } from 'firebase/firestore' // edit enq anum datan basa
 
 import "./index.css"
 import { FIRESTORE_PATH__NAMES } from '../../core/constants/constants'
-import {useDispatch, useSelector} from "react-redux";
-import {fetchUserProfileInfo} from "../../state-management/slices/userProfile";
+import {useSelector} from "react-redux";
+// import {fetchUserProfileInfo} from "../../state-management/slices/userProfile";
 import ImageUpload from "../../components/shared/ImageUpload";
 
 
 const Profile = () => {
 
-    const dispatch = useDispatch() ////////
+    // const dispatch = useDispatch() ////////
     const {authUserInfo: {userData}} = useSelector(store=> store.userProfile); /////////
 
 // const {userProfileInfo, handleGetUserData} = useContext(AuthContext)
