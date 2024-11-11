@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import {Button, Form, Input,  notification, Tag } from "antd"
-import  {db} from "../../services/firbase"
+import {Button, Form, Input, message, notification, Tag} from "antd"
+import {db, storage} from "../../services/firbase"
 import { doc,  updateDoc } from 'firebase/firestore' // edit enq anum datan basaum
 
 import "./index.css"
-import { FIRESTORE_PATH__NAMES } from '../../core/constants/constants'
-import {useSelector} from "react-redux";
-// import {fetchUserProfileInfo} from "../../state-management/slices/userProfile";
+import {FIRESTORE_PATH__NAMES, STORAGE_PATH_NAMES} from '../../core/constants/constants'
+import {useDispatch, useSelector} from "react-redux";
 import ImageUpload from "../../components/shared/ImageUpload";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {setImageProfileUrl} from "../../state-management/slices/userProfile";
 
 
 const Profile = () => {
 
-    // const dispatch = useDispatch() ////////
-    const {authUserInfo: {userData}} = useSelector(store=> store.userProfile); /////////
+const dispatch = useDispatch() ////////
+const {authUserInfo: {userData}} = useSelector(store=> store.userProfile); /////////
 
-// const {userProfileInfo, handleGetUserData} = useContext(AuthContext)
+
 const [form] = Form.useForm()
 const [loading, setLoading] = useState(false)
 const {uid, ...restData} = userData /////
@@ -57,6 +58,61 @@ const handleEditUserProfile = async (values)=>{
 
 }
 
+    const [uploading, setUploading] = useState(false) // to show upload process
+    const [progress, setProgress] = useState(0) // to show progress
+
+
+const UpdateedUserProfileImage = async(imgUrl)=>{
+        try{
+            const  userDocRef = doc(db, FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid )
+            await updateDoc(userDocRef, {imgUrl})
+
+        }catch(e){
+            notification.error({
+                message: "Error:"
+            })
+        }
+    }
+
+const handleUpload = ({file}) => { // TODO
+
+
+
+
+        setUploading(true) // to start progress
+
+        const storageRef =  ref(storage, `${STORAGE_PATH_NAMES.PROFILE_IMAGES}/${uid}`); // to create a image
+
+        const uploadTask = uploadBytesResumable(storageRef, file) // to store a image
+
+        uploadTask.on("state_changed", (snapshot)=>{
+                console.log(snapshot)
+
+                const progVal = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+
+                setProgress(progVal)
+            },
+            (error)=>{
+                setUploading(false)
+                setProgress(0)
+                message.error(`Error Uploading File ${error.message} `)
+            }, ()=>{
+                getDownloadURL(uploadTask.snapshot.ref )
+                    .then((imgUrl)=>{
+                        setUploading(false)
+                        setProgress(0)
+
+                        UpdateedUserProfileImage(imgUrl)
+                        dispatch(setImageProfileUrl(imgUrl))
+                        message.success(`Uploading File successfully`)
+                    })
+
+            }
+
+        )
+
+
+}
 
 
   return (
@@ -87,7 +143,13 @@ const handleEditUserProfile = async (values)=>{
               <Form.Item
                   label="Image"
               >
-                  <ImageUpload/>
+                  <ImageUpload
+
+                      handleUpload={handleUpload}
+                      progress={progress}
+                      uploading={uploading}
+
+                  />
 
               </Form.Item>
 

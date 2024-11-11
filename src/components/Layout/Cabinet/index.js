@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 import { ROUTE_CONSTANTS } from '../../../core/constants/constants'
 
@@ -12,17 +12,30 @@ const MenuItems = [
   {
     label: "Personal Information",
     key: ROUTE_CONSTANTS.PROFILE
+  },
+  {
+    label: "Cabinet",
+    key: ROUTE_CONSTANTS.CABINET
   }
 ]
 
 
 
 const CabinetLayout = () => {
+const navigate = useNavigate() // navigate anelu hame
+const {pathname} = useLocation() // pathname y vercnelu hamar URL ic
 
-
-  const {
+const {
     token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+} = theme.useToken();
+
+
+const handleNavigate = ({key}) =>{
+console.log(key)
+  navigate(key)
+}
+
+
 
 
   return (
@@ -34,6 +47,8 @@ const CabinetLayout = () => {
           <Menu 
           mode='inline'
           items={MenuItems}
+          onSelect ={handleNavigate} // cnavigate e anum tvyal ej
+          selectedKeys={[pathname]} // vorpesi pahi refreshic heto selected y
           />
 
 
