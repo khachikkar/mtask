@@ -1,6 +1,6 @@
 import React from 'react';
 import "./index.css"
-import {Upload, Progress, Image, Tooltip} from "antd"
+import {Upload, Progress} from "antd"
 import { PlusOutlined} from "@ant-design/icons"
 import PropTypes from "prop-types" // define property types for dont do typeErrors
 
