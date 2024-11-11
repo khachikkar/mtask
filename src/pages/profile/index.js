@@ -8,7 +8,7 @@ import {FIRESTORE_PATH__NAMES, STORAGE_PATH_NAMES} from '../../core/constants/co
 import {useDispatch, useSelector} from "react-redux";
 import ImageUpload from "../../components/shared/ImageUpload";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {setImageProfileUrl} from "../../state-management/slices/userProfile";
+import {fetchUserProfileInfo, setImageProfileUrl} from "../../state-management/slices/userProfile";
 
 
 const Profile = () => {
@@ -41,7 +41,7 @@ const handleEditUserProfile = async (values)=>{
 
   await updateDoc(userDocRef, values)
 
-// dispatch(fetchUserProfileInfo(values))
+dispatch(fetchUserProfileInfo()) /// vor submit tanq miangamic poxi tvyalnery
 
 
   notification.success({
