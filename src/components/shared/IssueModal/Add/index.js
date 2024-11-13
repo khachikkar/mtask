@@ -12,6 +12,7 @@ const handleCreateIssue =  (values)=>{
 
     console.log("Handle Created Issue", values)
     setShowModal(false)
+    setButtonLoading(false)
     form.resetFields()
 }
 
