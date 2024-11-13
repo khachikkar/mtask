@@ -18,7 +18,7 @@ import {
 import Intro from "./components/Intro";
 
 import Profile from "./pages/profile";
-
+import Cabinet from "./pages/Cabinet"
 import {useEffect} from "react";
 
 import { useDispatch, useSelector} from "react-redux";
@@ -58,6 +58,8 @@ dispatch(fetchUserProfileInfo()) //////////////////////
            >
 
             <Route path={ROUTE_CONSTANTS.PROFILE} element={ <Profile /> } />
+            <Route path={ROUTE_CONSTANTS.CABINET} element={ <Cabinet /> } />
+
 
           </Route>
           </Route>
