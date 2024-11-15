@@ -2,6 +2,7 @@ export const passWalidation = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6
 
 export const  FIRESTORE_PATH__NAMES ={
     REGISTERED_USERS: "registred_users",
+    ISSUES: "issues"
 }
 
 export const STORAGE_PATH_NAMES  = {

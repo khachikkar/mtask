@@ -1,15 +1,11 @@
 import React from 'react';
 import {Form, Input, Select, Space} from "antd"
-
 import {ISSUE_OPTIONS} from "../../../../core/constants/issues";
 import {ISSUE_PRIORITY_OPTIONS} from "../../../../core/constants/issues";
+import Editor from "../../../Editor";
+
 
 const ModalForm = ({form, onFinish})=>{
-
-    console.log(Object.values(ISSUE_OPTIONS));
-
-
-
 
 
 return(
@@ -58,8 +54,8 @@ rules={[
 
 
     <Form.Item
-        label="Issue Type"
-        name="type"
+        label="Issue Priority"
+        name="priority"
         rules={[
             {
                 required: true,
@@ -67,7 +63,7 @@ rules={[
             }
         ]}
     >
-        <Select placeholder="Issue Type">
+        <Select placeholder="Issue Priority">
             {
                 Object.values(ISSUE_PRIORITY_OPTIONS).map(({value, icon , label})=>{
                     return(
@@ -85,6 +81,18 @@ rules={[
     </Form.Item>
 
 
+    <Form.Item
+        name="description"
+        label="Description"
+        rules={[
+            {
+                required: true,
+                message: "Please enter an Issue Description",
+            }
+        ]}>
+{/*<Input.TextArea showCount />*/}
+<Editor />
+    </Form.Item>
 
 </Form>
 
