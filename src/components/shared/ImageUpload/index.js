@@ -7,7 +7,7 @@ import PropTypes from "prop-types" // define property types for dont do typeErro
 import {useSelector} from "react-redux";
 
 
-const ImageUpload = ({progress, uploading, handleUpload}) => {
+const ImageUpload = ({progress = 0, uploading, handleUpload}) => {
 
 const {userData:{imgUrl, uid, firstname}} = useSelector(store=> store.userProfile.authUserInfo);
 
