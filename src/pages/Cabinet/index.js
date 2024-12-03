@@ -15,7 +15,7 @@ const dispatch = useDispatch()
 
   useEffect(() => {
    dispatch( fetchIssueData())
-  }, []);
+  }, [dispatch]);
 
 
 const handleOpenModal = ()=>{
