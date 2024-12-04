@@ -6,6 +6,7 @@ import {FIRESTORE_PATH__NAMES} from "../../../core/constants/constants";
 
 const initialState = {
     data: [],
+    error: null,
     isLoading : false
 }
 
@@ -32,7 +33,10 @@ const IssueSlice =  createSlice({
                 state.loading = false
                 state.data = action.payload
             })
-            .addCase(fetchIssueData.rejected, ()=>{
+            .addCase(fetchIssueData.rejected, (state, action)=>{
+                state.loading = false
+                state.data = []
+                state.error = action.payload
                 console.log("fetchIssueData.rejected")
             })
     }
