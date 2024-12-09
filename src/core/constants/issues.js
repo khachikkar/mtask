@@ -48,6 +48,32 @@ export const ISSUE_OPTIONS = {
     }
 }
 
+
+export const taskStatus ={
+    TODO:{
+        key: 0,
+        title: "TODO"
+    },
+    IN_PROGRESS:{
+        key: 1,
+        title: "IN_PROGRESS"
+    },
+    TEST: {
+        key: 2,
+        title: "Test"
+    },
+    DONE: {
+        key: 3,
+        title: "Done"
+    }
+}
+
+
+
+
+
+
+
 export const ISSUE_PRIORITY_OPTIONS = {
     [ISSUE_PRIORITY.HIGHEST]: {
         value: ISSUE_PRIORITY.HIGHEST,

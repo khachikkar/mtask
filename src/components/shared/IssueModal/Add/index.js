@@ -13,6 +13,7 @@ import {FIRESTORE_PATH__NAMES} from "../../../../core/constants/constants";
 
 import {useDispatch} from "react-redux";
 import {fetchIssueData} from "../../../../state-management/slices/issues";
+import {taskStatus} from "../../../../core/constants/issues";
 
 
 
@@ -36,6 +37,7 @@ const handleCreateIssue =  async(values)=>{
     const TaskModel = {
         taskId,
         ...values,
+        status: taskStatus.TODO.key,
         date: new Date().toLocaleDateString()
     }
 
