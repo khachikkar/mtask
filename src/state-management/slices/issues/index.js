@@ -38,14 +38,14 @@ const IssueSlice =  createSlice({
     },
     extraReducers:(promise)=>{
         promise.addCase(fetchIssueData.pending, (state)=>{
-            state.loading=true;
+            state.isLoading=true;
         })
             .addCase(fetchIssueData.fulfilled, (state, action)=>{
-                state.loading = false
+                state.isLoading = false
                 state.data = action.payload
             })
             .addCase(fetchIssueData.rejected, (state, action)=>{
-                state.loading = false
+                state.isLoading = false
                 state.data = []
                 state.error = action.payload
                 console.log("fetchIssueData.rejected")

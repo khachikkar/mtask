@@ -1,14 +1,29 @@
 import React, {useState, useEffect} from 'react'
-import {Button} from 'antd'
+import {Button, Typography} from 'antd'
 import AddIssueModal from "../../components/shared/IssueModal/Add";
 import EditIssueModal from "../../components/shared/IssueModal/Edit";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchIssueData} from "../../state-management/slices/issues";
+import {DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+
+
+
+
+
+
+
+import LoadingWraper from "../../components/shared/LoadingWraper";
 import "./index.css"
+
+
+
+
+
 
 
 const Cabinet = () => {
 
+const {Title} = Typography
 const [showModal, setShowModal] = useState(false)
 const [editModalData, setEditModalData] = useState(null)
 
@@ -17,7 +32,7 @@ const [editModalData, setEditModalData] = useState(null)
 
 
 
-const {data} = useSelector(store=>store.issues)
+const {data, isLoading} = useSelector(store=>store.issues)
 const dispatch = useDispatch()
   console.log(data, "dddata")
 
@@ -45,9 +60,67 @@ const handleClose = ()=>{
       }
 
       {/*to do border*/}
-      <div className="board_container">
+      <div className="drag_context_container">
+        <LoadingWraper loading={isLoading}>
+          <DragDropContext>
+            {
+              Object.entries(data).map(([columnId, column]) => {
+                return (
+                    <div className="column_container" key={columnId}>
+                      <div className="column_header">
+                        <Title level={5} type="secondary">
+                          {columnId}
+                          {' '}
+                          ({column.length})
+                        </Title>
+                      </div>
 
-
+                      <div>
+                        <Droppable droppableId={columnId} key={columnId}>
+                          {(provided, snapshot) => {
+                            return (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    className="droppable_container"
+                                >
+                                  {
+                                    column.map((item, index) => {
+                                      return (
+                                          <Draggable
+                                              key={item.taskId}
+                                              draggableId={item.taskId}
+                                              index={index}
+                                          >
+                                            {
+                                              (provided, snapshot) => {
+                                                return (
+                                                    <div
+                                                        className="issue_card_container"
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                    >
+                                                      Task
+                                                    </div>
+                                                )
+                                              }
+                                            }
+                                          </Draggable>
+                                      )
+                                    })
+                                  }
+                                </div>
+                            )
+                          }}
+                        </Droppable>
+                      </div>
+                    </div>
+                )
+              })
+            }
+          </DragDropContext>
+        </LoadingWraper>
       </div>
     </div>
   )
