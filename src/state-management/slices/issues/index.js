@@ -13,7 +13,7 @@ import {transformIssueData} from "../../../core/helpers/transformissuedata";
 
 
 const initialState = {
-    data: [],
+    data: {},
     error: null,
     isLoading : false
 }
@@ -25,9 +25,9 @@ export const fetchIssueData =  createAsyncThunk("data/fetchData", async ()=>{
     //to do
     const resultData =  queryData.docs.map(doc=> doc.data())
 
-    transformIssueData(resultData)
 
-    return resultData
+
+    return transformIssueData(resultData)
 })
 
 const IssueSlice =  createSlice({

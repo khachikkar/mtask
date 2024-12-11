@@ -46,16 +46,8 @@ const handleClose = ()=>{
 
       {/*to do border*/}
       <div className="board_container">
-        <h2>TO DO</h2>
-        {
-          data.map((item)=>{
-            return (
-                  <div key={item.taskId} onClick={()=> setEditModalData(item)}>
-                    {item.issueName}
-                  </div>
-            )
-          })
-        }
+
+
       </div>
     </div>
   )
