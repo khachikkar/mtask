@@ -5,7 +5,7 @@ import EditIssueModal from "../../components/shared/IssueModal/Edit";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchIssueData} from "../../state-management/slices/issues";
 import {DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import {ISSUE_OPTIONS, ISSUE_PRIORITY_OPTIONS} from "../../core/constants/issues";
+import {ISSUE_OPTIONS, ISSUE_PRIORITY_OPTIONS, taskStatus} from "../../core/constants/issues";
 import {changeIssueColumns} from "../../state-management/slices/issues";
 
 import {db} from "../../services/firbase";
@@ -98,7 +98,7 @@ const handleChangeTaskStatus = async( result ) =>{
                     <div className="column_container" key={columnId}>
                       <div className="column_header">
                         <Title level={5} type="secondary">
-                          {columnId}
+                          {taskStatus[columnId].title}
                           {' '}
                           ({column.length})
                         </Title>
