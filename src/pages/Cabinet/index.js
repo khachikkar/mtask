@@ -5,15 +5,16 @@ import EditIssueModal from "../../components/shared/IssueModal/Edit";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchIssueData} from "../../state-management/slices/issues";
 import {DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import {ISSUE_OPTIONS} from "../../core/constants/issues";
+import {ISSUE_OPTIONS, ISSUE_PRIORITY_OPTIONS} from "../../core/constants/issues";
 import {changeIssueColumns} from "../../state-management/slices/issues";
 
 import {db} from "../../services/firbase";
 import {doc, updateDoc} from "firebase/firestore";
-
+import {FIRESTORE_PATH__NAMES} from "../../core/constants/constants";
 
 import LoadingWraper from "../../components/shared/LoadingWraper";
 import "./index.css"
+
 
 
 
@@ -55,9 +56,19 @@ const handleClose = ()=>{
 const handleChangeTaskStatus = async( result ) =>{
   console.log(result, "result")
   if(result.destination){
+
+    //destructured result object
+    const {destination, source} = result
+
     try{
-      const {source, destination} = result
       dispatch(changeIssueColumns({source, destination}))
+
+      //taked item from db
+      const docRef = doc(db, FIRESTORE_PATH__NAMES.ISSUES, result.draggableId)
+      //updated db by status
+      await updateDoc(docRef, {
+        status: destination.droppableId
+      })
     }catch(e){
       console.log("Error Drag")
     }
@@ -118,16 +129,20 @@ const handleChangeTaskStatus = async( result ) =>{
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
+                                                        onClick={() => setEditModalData(item)}
                                                     >
 
-                                                    {/*  to change */}
-                                                    <Flex justify="space-between">
-                                                     <Text> {item.issueName} </Text>
-                                                      <div>
-                                                        {ISSUE_OPTIONS[item.type]?.icon}
-                                                      </div>
-                                                    </Flex>
+                                                      {/*  to change */}
+                                                      <Flex justify="space-between">
+                                                        <Text> {item.issueName} </Text>
+                                                        <div>
+                                                          {ISSUE_OPTIONS[item.type]?.icon}
+                                                        </div>
 
+                                                      </Flex>
+                                                      <div>
+                                                        {ISSUE_PRIORITY_OPTIONS[item.priority]?.icon}
+                                                      </div>
                                                     </div>
                                                 )
                                               }
