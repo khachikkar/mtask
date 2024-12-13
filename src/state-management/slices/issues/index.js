@@ -33,8 +33,47 @@ export const fetchIssueData =  createAsyncThunk("data/fetchData", async ()=>{
 const IssueSlice =  createSlice({
     name: "issues",
     initialState,
+    //organizeing Issue change column functionalioty
     reducers :{
+changeIssueColumns: ( state, action)=>{
+    // structured sorted data
+    const columns = state.data
+    // destructured source and destination objects from action payload
+    const {source, destination} = action.payload
+    //the column array which belongs to source // vortexic vor brnel enq
+    const sourceColumnItems = [...columns[source.droppableId]]
+    // the dest array where we want to add
+    const destinationColumnItems = [...columns[destination.droppableId]]
 
+// the item that we are drged
+const [removedItem] = sourceColumnItems.splice(source.index, 1)
+
+// the doped area we put a where, from , and what
+destinationColumnItems.splice(destination.index, 0, removedItem)
+
+    // finished data
+    let changedColumn = {}
+
+    // updated data
+    if(source.droppableId !== destination.droppableId ){
+        changedColumn = {
+            ...columns,
+            [source.droppableId]: sourceColumnItems,
+            [destination.droppableId]: destinationColumnItems
+        }
+    }else{
+        sourceColumnItems.splice(destination.droppableId, 0, removedItem)
+        changedColumn = {
+            ...columns,
+            [source.droppableId]: sourceColumnItems,
+        }
+    }
+
+    console.log(JSON.parse(JSON.stringify({changedColumn})))
+
+    //set updated data
+    state.data = changedColumn
+}
     },
     extraReducers:(promise)=>{
         promise.addCase(fetchIssueData.pending, (state)=>{
@@ -53,4 +92,5 @@ const IssueSlice =  createSlice({
     }
 })
 
+export const  {changeIssueColumns}  =  IssueSlice.actions
 export default IssueSlice.reducer

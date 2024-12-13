@@ -46,8 +46,10 @@
 
 .issue_card_container {
     padding: 16px;
-    box-shadow: 0px 3px 4px #bebbbb;
     border-radius: 6px;
     background-color: #fff;
     cursor: pointer;
+}
+.issue_card_container:hover{
+    background-color: #cfd1d5;
 }

@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react'
-import {Button, Typography} from 'antd'
+import {Button, Typography, Flex} from 'antd'
 import AddIssueModal from "../../components/shared/IssueModal/Add";
 import EditIssueModal from "../../components/shared/IssueModal/Edit";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchIssueData} from "../../state-management/slices/issues";
 import {DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import {ISSUE_OPTIONS} from "../../core/constants/issues";
+import {changeIssueColumns} from "../../state-management/slices/issues";
 
-
-
-
-
+import {db} from "../../services/firbase";
+import {doc, updateDoc} from "firebase/firestore";
 
 
 import LoadingWraper from "../../components/shared/LoadingWraper";
@@ -23,7 +23,7 @@ import "./index.css"
 
 const Cabinet = () => {
 
-const {Title} = Typography
+const {Title, Text} = Typography
 const [showModal, setShowModal] = useState(false)
 const [editModalData, setEditModalData] = useState(null)
 
@@ -49,6 +49,24 @@ const handleClose = ()=>{
 }
 
 
+
+
+
+const handleChangeTaskStatus = async( result ) =>{
+  console.log(result, "result")
+  if(result.destination){
+    try{
+      const {source, destination} = result
+      dispatch(changeIssueColumns({source, destination}))
+    }catch(e){
+      console.log("Error Drag")
+    }
+  }
+}
+
+
+
+
   return (
     <div>
     <h2>Cabinet</h2>
@@ -62,7 +80,7 @@ const handleClose = ()=>{
       {/*to do border*/}
       <div className="drag_context_container">
         <LoadingWraper loading={isLoading}>
-          <DragDropContext>
+          <DragDropContext onDragEnd={handleChangeTaskStatus}>
             {
               Object.entries(data).map(([columnId, column]) => {
                 return (
@@ -101,7 +119,15 @@ const handleClose = ()=>{
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                     >
-                                                      Task
+
+                                                    {/*  to change */}
+                                                    <Flex justify="space-between">
+                                                     <Text> {item.issueName} </Text>
+                                                      <div>
+                                                        {ISSUE_OPTIONS[item.type]?.icon}
+                                                      </div>
+                                                    </Flex>
+
                                                     </div>
                                                 )
                                               }
