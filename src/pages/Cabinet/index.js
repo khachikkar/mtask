@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Button, Typography, Flex} from 'antd'
+import {Button, Typography, Flex, Avatar, Space, Tooltip} from 'antd'
 import AddIssueModal from "../../components/shared/IssueModal/Add";
 import EditIssueModal from "../../components/shared/IssueModal/Edit";
 import {useSelector, useDispatch} from "react-redux";
@@ -14,6 +14,7 @@ import {FIRESTORE_PATH__NAMES} from "../../core/constants/constants";
 
 import LoadingWraper from "../../components/shared/LoadingWraper";
 import "./index.css"
+import {fetchallUsers} from "../../state-management/slices/allUsers";
 
 
 
@@ -34,12 +35,25 @@ const [editModalData, setEditModalData] = useState(null)
 
 
 const {data, isLoading} = useSelector(store=>store.issues)
+  const {users} = useSelector(store=>store.users);
+
+
 const dispatch = useDispatch()
   console.log(data, "dddata")
 
+  // console.log(users, "u")
+
   useEffect(() => {
    dispatch( fetchIssueData())
+    dispatch(fetchallUsers())
   }, [dispatch]);
+
+
+
+
+
+
+
 
 
 const handleOpenModal = ()=>{
@@ -80,7 +94,29 @@ const handleChangeTaskStatus = async( result ) =>{
 
   return (
     <div>
-    <h2>Cabinet</h2>
+      <Flex justify={"space-between"} align={"center"}>
+        <h2>Cabinet</h2>
+
+        <Avatar.Group>
+        {
+          users.map(({name, lastname, imgUrl})=>{
+            return(
+
+                  <Tooltip title={`${name} ${lastname}`} placement="top">
+                    <Avatar
+                        src={imgUrl}
+                        style={{
+                          backgroundColor: '#2777f1',
+                        }}
+                    />
+                  </Tooltip>
+
+            )
+          })
+        }
+        </Avatar.Group>
+
+      </Flex>
       <Button onClick={handleOpenModal} type="primary">Create a Issue</Button>
       <AddIssueModal onClose={handleClose} isOpen={showModal} setShowModal={setShowModal} />
       {/* Booleanov asenq ete datan kaa true e nor mount ara editmodal y*/}
@@ -115,6 +151,27 @@ const handleChangeTaskStatus = async( result ) =>{
                                 >
                                   {
                                     column.map((item, index) => {
+
+
+                                      console.log(item.assignTo, "assignTo")
+
+
+
+                                        const matched =users.filter((user)=> {
+                                          return user.uid === item.assignTo
+                                        })
+
+
+
+                                      // function matched(){
+                                      //   const matched =users.filter((user)=> {
+                                      //     return user.uid === item.assignTo
+                                      //   })
+                                      //   return matched[0]
+                                      // }
+
+
+
                                       return (
                                           <Draggable
                                               key={item.taskId}
@@ -142,6 +199,10 @@ const handleChangeTaskStatus = async( result ) =>{
                                                       </Flex>
                                                       <div>
                                                         {ISSUE_PRIORITY_OPTIONS[item.priority]?.icon}
+                                                      </div>
+                                                      <div>
+                                                        <Text style={{fontSize:"12px", color:"gray"}} >Assigned:</Text>
+                                                        <Space><Avatar src={matched[0]?.imgUrl} size={20}></Avatar> <span>{matched[0]?.name}{matched[0]?.lastname}</span></Space>
                                                       </div>
                                                     </div>
                                                 )
