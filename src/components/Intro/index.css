@@ -1,14 +1,21 @@
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
 .ree{
-    background-color: #000;
+    background: rgb(0,89,255);
+    background: linear-gradient(90deg, rgba(0,89,255,1) 0%, rgba(12,11,11,1) 55%);
     min-height: 700px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 10px;
     justify-content: space-between;
 
     h1{
         margin: 0;
-        font-size: 80px;
+        font-size: 40px;
         color: white;
         margin-bottom: 20px;
         text-align: center;
@@ -22,6 +29,14 @@
 
     }
 }
+
+
+@media screen and (max-width: 600px){
+h1{
+    font-size: 30px;
+}
+}
+
 
 
 .left{
