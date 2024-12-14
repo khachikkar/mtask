@@ -25,7 +25,7 @@ const {authUserInfo: {isAuth, userData}}= useSelector((store)=>store.userProfile
   return (
     <div className="main_header">
       <Flex justify="space-between" align="center">
-<Link to={isAuth ? ROUTE_CONSTANTS.CABINET : ROUTE_CONSTANTS.INTRO}>
+<Link to={ ROUTE_CONSTANTS.INTRO}>
 <img className="Header_logo" src={logo} alt="logo" />
 </Link>
         <div>

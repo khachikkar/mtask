@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Button, Typography, Flex, Avatar, Space, Tooltip} from 'antd'
+import {Button, Typography, Flex, Avatar, Space, Tooltip, notification} from 'antd'
 import AddIssueModal from "../../components/shared/IssueModal/Add";
 import EditIssueModal from "../../components/shared/IssueModal/Edit";
 import {useSelector, useDispatch} from "react-redux";
@@ -35,7 +35,8 @@ const [editModalData, setEditModalData] = useState(null)
 
 
 const {data, isLoading} = useSelector(store=>store.issues)
-  const {users} = useSelector(store=>store.users);
+const {users} = useSelector(store=>store.users);
+  const {authUserInfo: { userData}}= useSelector((store)=>store.userProfile)
 
 
 const dispatch = useDispatch()
@@ -186,7 +187,15 @@ const handleChangeTaskStatus = async( result ) =>{
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
-                                                        onClick={() => setEditModalData(item)}
+                                                        onClick={() => {
+                                                          if(item.owner === userData.uid){
+                                                            setEditModalData(true)
+                                                          }else{
+                                                           notification.error({
+                                                             message: "Sorry, You can't Edit this Issue as it's not yours."
+                                                           })
+                                                          }
+                                                        }}
                                                     >
 
                                                       {/*  to change */}
@@ -202,7 +211,7 @@ const handleChangeTaskStatus = async( result ) =>{
                                                       </div>
                                                       <div>
                                                         <Text style={{fontSize:"12px", color:"gray"}} >Assigned:</Text>
-                                                        <Space><Avatar src={matched[0]?.imgUrl} size={20}></Avatar> <span>{matched[0]?.name}{matched[0]?.lastname}</span></Space>
+                                                        <Space><Avatar src={matched[0]?.imgUrl} size={20}></Avatar> <span>{matched[0]?.name} {matched[0]?.lastname}</span></Space>
                                                       </div>
                                                     </div>
                                                 )

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Avatar, Form, Input, Select, Space} from "antd"
+import {Avatar, Flex, Form, Input, Select, Space} from "antd"
 import {ISSUE_OPTIONS} from "../../../../core/constants/issues";
 import {ISSUE_PRIORITY_OPTIONS} from "../../../../core/constants/issues";
 import Editor from "../../../Editor";
@@ -11,6 +11,7 @@ const ModalForm = ({form, onFinish})=>{
 
 
 const {users} = useSelector(store=>store.users);
+const {authUserInfo: { userData}}= useSelector((store)=>store.userProfile)
 const dispatch = useDispatch();
 
 
@@ -19,7 +20,7 @@ const dispatch = useDispatch();
         dispatch(fetchallUsers())
     }, [dispatch]);
 
-    // console.log(users, "u")
+    console.log(userData, "u")
 
 return(
 <Form layout="vertical" form={form} onFinish={onFinish}>
@@ -123,6 +124,33 @@ rules={[
             }
         </Select>
     </Form.Item>
+
+
+
+    <Form.Item
+        label="Issue Owner"
+        name="owner"
+        rules={[
+            {
+                required: true,
+                message: "Please fill the owner filed",
+            }
+        ]}
+    >
+      {/*<Flex><Avatar src={userData.imgUrl} />{userData.name} {userData.lastname}</Flex>*/}
+        <Select>
+        <Select.Option
+            key={userData.uid}
+            value={userData.uid}>
+            <Space>
+                <Avatar src={userData.imgUrl}></Avatar>{userData.name}{userData.lastname} <h5>{userData.position}</h5>
+            </Space>
+        </Select.Option>
+        </Select>
+
+    </Form.Item>
+
+
 
 
 
