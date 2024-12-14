@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Avatar, Flex, Form, Input, Select, Space} from "antd"
+import {Avatar,  Form, Input, Select, Space} from "antd"
 import {ISSUE_OPTIONS} from "../../../../core/constants/issues";
 import {ISSUE_PRIORITY_OPTIONS} from "../../../../core/constants/issues";
 import Editor from "../../../Editor";
