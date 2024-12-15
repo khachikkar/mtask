@@ -189,7 +189,7 @@ const handleChangeTaskStatus = async( result ) =>{
                                                         {...provided.dragHandleProps}
                                                         onClick={() => {
                                                           if(item.owner === userData.uid){
-                                                            setEditModalData(true)
+                                                            setEditModalData(item)
                                                           }else{
                                                            notification.error({
                                                              message: "Sorry, You can't Edit this Issue as it's not yours."

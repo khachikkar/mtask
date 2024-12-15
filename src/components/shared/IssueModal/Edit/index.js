@@ -12,6 +12,10 @@ import {useDispatch} from "react-redux";
 
 const EditIssueModal = ({isOpen, onClose, data}) => {
 
+
+
+
+
 const dispatch = useDispatch();
 
 const [buttonLoading, setButtonLoading] = useState(false);
@@ -19,6 +23,14 @@ const [buttonLoading, setButtonLoading] = useState(false);
 
 
 const [form] = Form.useForm()
+
+// implement a data fileds seted
+    useEffect(() => {
+
+        console.log(data, "data on useEffect")
+       form.setFieldsValue(data)
+        console.log("opened")
+    }, [ data, form ])
 
 
 const handleEditIssue = async (formData)=>{
@@ -28,6 +40,7 @@ setButtonLoading(true)
 
 // const {taskId, ...restData} = formData
  const {taskId} = data
+    console.log(data, "ff")
 const issueDocRef = doc(db, FIRESTORE_PATH__NAMES.ISSUES, taskId)
 await updateDoc(issueDocRef, formData) // vory => vortex
 notification.success({
@@ -48,11 +61,7 @@ onClose()
 
 }
 
-// implement a data fileds seted
-useEffect(() => {
 
-    form.setFieldsValue(data)
-}, [ data, form ])
 
 
 return (
