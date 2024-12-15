@@ -1,8 +1,7 @@
 import React from 'react'
 import "./index.css"
-import intro from "../../core/images/intro.png"
 import { AnimatePresence, motion, useInView } from 'framer-motion';
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom'
 import {ROUTE_CONSTANTS} from "../../core/constants/constants";
 
 
@@ -42,24 +41,37 @@ const Intro = () => {
 
   return (
     <div className="ree">
-        <div className="left">
+
+<div className="hero">
+
+    <GradualSpacing  text="Manage Your Tasks" />
+    <h3>Effectively</h3>
+<p>mTask is a dynamic task management application designed to streamline personal and team workflows. It offers intuitive tools to organize, prioritize, and track tasks efficiently, ensuring you stay on top of your goals and deadlines.</p>
+
+    <Link to={ROUTE_CONSTANTS.CABINET}>
+        <div className="glow-on-hover"> Go to my Space</div>
+    </Link>
+</div>
 
 
-            {/*<h1>Mtask. Task Management App</h1>*/}
-            <div className="a">
-                <GradualSpacing  text="Mtask. Task Mangement App" />
-            </div>
-
-            <Link to={ROUTE_CONSTANTS.CABINET}>
-                <div className="glow-on-hover"> Go to my Space</div>
-            </Link>
-
-        </div>
+        {/*<div className="left">*/}
 
 
-        <div className="right">
-            <img src={intro} alt={intro}/>
-        </div>
+        {/*    /!*<h1>Mtask. Task Management App</h1>*!/*/}
+        {/*    <div className="a">*/}
+        {/*        <GradualSpacing  text="Mtask. Task Mangement App" />*/}
+        {/*    </div>*/}
+
+
+
+        {/*</div>*/}
+        {/*<div className="right">*/}
+        {/*    <img src={intro} alt={intro}/>*/}
+        {/*</div>*/}
+
+        <div className="soon">In Building Process...</div>
+
+
     </div>
   )
 }

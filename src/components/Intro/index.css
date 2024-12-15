@@ -1,60 +1,117 @@
 
+
+.hero{
+    /*border: 1px solid red;*/
+    /*background-color: red;*/
+    height: 500px;
+    background-image: url("../../../src/core/images/a.png");
+    /*background-repeat: no-repeat;*/
+    background-position: right;
+    /*object-fit: cover;*/
+
+
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+
+    h1{
+        margin: 0;
+        font-size: 70px;
+        font-weight: bold;
+    }
+    h3{
+        margin: 0;
+        font-size: 40px;
+        font-style: italic;
+        font-weight: lighter;
+    }
+
+p{
+    margin-top: 24px;
+    max-width: 600px;
+    color: gray;
+}
+}
+
+
+
+
+
+
 a{
     text-decoration: none;
     color: inherit;
 }
+
+
+
+
+
 .ree{
-    background: rgb(0,89,255);
-    background: linear-gradient(90deg, rgba(0,89,255,1) 0%, rgba(12,11,11,1) 55%);
-    min-height: 700px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    justify-content: space-between;
-
-    h1{
-        margin: 0;
-        font-size: 40px;
-        color: white;
-        margin-bottom: 40px;
-        text-align: center;
-    }
-
-    img{
-        height: 500px;
-        width: 500px;
-        border-radius: 10px;
-        object-fit: cover;
-
-    }
 }
 
-
-@media screen and (max-width: 600px){
-h1{
-    font-size: 30px;
-}
-}
-
-
-
-.left{
+.soon{
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
+
+/*.ree{*/
+/*    background: rgb(0,89,255);*/
+/*    background: linear-gradient(90deg, rgba(0,89,255,1) 0%, rgba(12,11,11,1) 55%);*/
+/*    min-height: 700px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    padding: 10px;*/
+/*    justify-content: space-between;*/
+
+/*    h1{*/
+/*        margin: 0;*/
+/*        font-size: 40px;*/
+/*        color: white;*/
+/*        margin-bottom: 40px;*/
+/*        text-align: center;*/
+/*    }*/
+
+/*    img{*/
+/*        height: 500px;*/
+/*        width: 500px;*/
+/*        border-radius: 10px;*/
+/*        object-fit: cover;*/
+
+/*    }*/
+/*}*/
+
+
+/*@media screen and (max-width: 600px){*/
+/*h1{*/
+/*    font-size: 30px;*/
+/*}*/
+/*}*/
+
+
+
+/*.left{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*}*/
 
 
 .glow-on-hover {
     width: 220px;
-    height: 100px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
     outline: none;
-    color: #fff;
-    background: black;
+    color: black;
+    background: white;
     border: 1px solid #1868db;
     cursor: pointer;
     position: relative;
@@ -78,7 +135,7 @@ h1{
 }
 
 .glow-on-hover:active {
-    color: #fff
+    color: black
 }
 
 .glow-on-hover:active:after {
@@ -95,7 +152,7 @@ h1{
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: #fff;
     left: 0;
     top: 0;
 }
