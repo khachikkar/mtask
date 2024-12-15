@@ -36,11 +36,13 @@ const [editModalData, setEditModalData] = useState(null)
 
 const {data, isLoading} = useSelector(store=>store.issues)
 const {users} = useSelector(store=>store.users);
-  const {authUserInfo: { userData}}= useSelector((store)=>store.userProfile)
+const {authUserInfo: { userData}}= useSelector((store)=>store.userProfile)
 
+
+  const musers = users.filter(user => user.companyName === userData.companyName);
 
 const dispatch = useDispatch()
-  console.log(data, "dddata")
+
 
   // console.log(users, "u")
 
@@ -48,6 +50,49 @@ const dispatch = useDispatch()
    dispatch( fetchIssueData())
     dispatch(fetchallUsers())
   }, [dispatch]);
+
+
+
+// issues object data
+    console.log(data, "dddata")
+// all users
+    console.log(musers, "musers")
+// userData
+    console.log(userData, "current user")
+
+
+
+    function filterIssuesByCompany(issues, userData, users) {
+        // Get the logged-in user's company name
+        const currentCompanyName = userData.companyName;
+
+        // Create a map of UIDs to their company names for faster lookup
+        const userCompanyMap = users.reduce((map, user) => {
+            map[user.uid] = user.companyName;
+            return map;
+        }, {});
+
+        // Filter the issues data
+        const filteredIssues = Object.keys(issues).reduce((result, category) => {
+            // Filter issues in each category
+            result[category] = issues[category].filter(issue => {
+                // Check if the issue owner exists in the user list and belongs to the same company
+                return (
+                    userCompanyMap[issue.owner] && userCompanyMap[issue.owner] === currentCompanyName
+                );
+            });
+            return result;
+        }, {});
+
+        return filteredIssues;
+    }
+
+
+
+    const filteredIssues = filterIssuesByCompany(data, userData, musers);
+
+    console.log(filteredIssues, "missues");
+
 
 
 
@@ -97,10 +142,11 @@ const handleChangeTaskStatus = async( result ) =>{
     <div>
       <Flex justify={"space-between"} align={"center"}>
         <h2>Cabinet</h2>
+          <h1>{userData.companyName}</h1>
 
         <Avatar.Group>
         {
-          users.map(({name, lastname, imgUrl})=>{
+            musers.map(({name, lastname, imgUrl})=>{
             return(
 
                   <Tooltip title={`${name} ${lastname}`} placement="top">
@@ -130,7 +176,7 @@ const handleChangeTaskStatus = async( result ) =>{
         <LoadingWraper loading={isLoading}>
           <DragDropContext onDragEnd={handleChangeTaskStatus}>
             {
-              Object.entries(data).map(([columnId, column]) => {
+              Object.entries(filteredIssues).map(([columnId, column]) => {
                 return (
                     <div className="column_container" key={columnId}>
                       <div className="column_header">
@@ -157,8 +203,8 @@ const handleChangeTaskStatus = async( result ) =>{
                                       console.log(item.assignTo, "assignTo")
 
 
-
-                                        const matched =users.filter((user)=> {
+                                        // add a muser for map
+                                        const matched = users.filter((user)=> {
                                           return user.uid === item.assignTo
                                         })
 

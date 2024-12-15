@@ -11,9 +11,11 @@ const ModalForm = ({form, onFinish})=>{
 
 
 const {users} = useSelector(store=>store.users);
+
 const {authUserInfo: { userData}}= useSelector((store)=>store.userProfile)
 const dispatch = useDispatch();
 
+const musers = users.filter(user => user.companyName === userData.companyName);
 
     useEffect(() => {
 
@@ -110,7 +112,7 @@ rules={[
     >
         <Select placeholder="Assign to">
             {
-                users.map(({name, lastname, uid, imgUrl, position})=>{
+                musers.map(({name, lastname, uid, imgUrl, position})=>{
                     return(
                         <Select.Option
                             key={uid}

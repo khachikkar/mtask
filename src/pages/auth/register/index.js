@@ -131,15 +131,25 @@ const Register = () => {
 
   const handleRegister = async (values) => {
     setLoading(true);
-    const { name, lastname, email, password } = values;
+    const { name, lastname, email, password, companyName } = values;
     try {
       // avelacnum enq datan db -um ->
      const response =  await createUserWithEmailAndPassword(auth, email, password); // vercreci responsey
      const {uid} = response.user; // estexic uid -n 
-     const createddoc = doc(db,  FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid) // (1-databasan, papkan vortex qcum enq, u et user i idn)
+     const createddoc = doc(db,  FIRESTORE_PATH__NAMES.REGISTERED_USERS, uid)
+     // (1-databasan, papkan vortex qcum enq, u et user i idn)
+
+      // (1-databasan, papkan vortex qcum enq, u et user i idn)
      await setDoc(createddoc, {
-      uid, name, lastname, email
-     }) // set enq anum datan 
+      uid, name, lastname, email, companyName
+     }) // set enq anum datan
+
+      const companyDoc = doc(db, FIRESTORE_PATH__NAMES.COMPANY, companyName);
+      await setDoc(companyDoc, {
+        companyName,
+      });
+
+
       console.log(values )
       navigate(ROUTE_CONSTANTS.LOGIN);
     } catch (e) {
@@ -181,6 +191,22 @@ const Register = () => {
         >
           <Input type="text" placeholder="enter your surname" />
         </Form.Item>
+
+
+        <Form.Item
+            label="Comapny Name"
+            name="companyName"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Comany name provided by Invaitor",
+              },
+            ]}
+        >
+          <Input type="text" placeholder="enter Company Name" />
+        </Form.Item>
+
+
 
         <Form.Item
           label="Eamil"
