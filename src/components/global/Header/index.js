@@ -10,7 +10,7 @@ import { ROUTE_CONSTANTS } from "../../../core/constants/constants";
 import {useSelector} from "react-redux";
 
 // import logo from "../../../core/images/mylogo.png"
-import logo from "../../../core/images/logoChristmas.png"
+import logo from "../../../core/images/logoChristmas.avif"
 
 const Header = () => {
 
